@@ -1,17 +1,16 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
-import Background from './src/components/Background';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
-export default class App extends React.Component {
+import reducers from './src/reducers';
+import AppWithNavigationState from './src/navigators/AppNavigator';
+
+export default class App extends Component {
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <Background />
-      </View>
+      <Provider store={createStore(reducers)}>
+        <AppWithNavigationState />
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-
-});
