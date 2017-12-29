@@ -13,7 +13,7 @@ export default class Home extends React.Component {
                     <Text style={styles.Title}>Werewolf</Text>
                     <View style={styles.btnContainer}>
                       <View style={styles.button}>
-                        <Btn text="Join Room" onPress= { () => {}} />
+                        <Btn text="Join Room" onPress={() => this.props.navigation.navigate('Roles')} />
                       </View>
                       <View style={styles.button}>
                         <Btn text="Create Room" onPress= { () => {}} />

@@ -7,10 +7,13 @@ import {
     StackNavigator, TabNavigator
 } from 'react-navigation';
 import Home from '../components/Home';
+import DivideRoles from '../components/DivideRoles';
+
 
 // Put each screen here
 export const AppNavigator = StackNavigator({
     Home: { screen: Home },
+    Roles: { screen: DivideRoles }
 });
 
 // wire up the Android back button
