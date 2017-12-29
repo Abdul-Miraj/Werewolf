@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "name": "OSAMAALHAQ",
+        "isHost": true,
+        "role": "",
+        "isDead": false
+    },
+    {
+        "id": 2,
+        "name": "BILL",
+        "isHost": false,
+        "role": "",
+        "isDead": false
+    },
+    {
+        "id": 3,
+        "name": "FAUZAN",
+        "isHost": false,
+        "role": "",
+        "isDead": false
+    },
+    {
+        "id": 4,
+        "name": "OMEE",
+        "isHost": false,
+        "role": "",
+        "isDead": false
+    },
+    {
+        "id": 5,
+        "name": "ABDUL",
+        "isHost": false,
+        "role": "",
+        "isDead": false
+    }
+]
