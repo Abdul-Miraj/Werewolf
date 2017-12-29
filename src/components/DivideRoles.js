@@ -17,11 +17,19 @@ class DivideRoles extends Component {
     }
     // convert arrary of objects into array of names
     assignRole = () => {
-        let players = _.map(this.props.players, 'name');
+        let players = this.props.players;
+
+        // shuffle the players
         shuffle(players);
+        // assign the roles and update the array
+        for (let i=0; i < players.length; i++) {
+            players[i].role = this.state.roles[i];
+        }
+        // modify the player state
+        
         // get the index of my username and assign it the role
-        let index = players.indexOf(this.state.username);
-        return this.state.roles[index];
+        let index = _.map(players, 'name').indexOf(this.state.username);
+        return players[index].role;
     };
 
     render() {
@@ -40,6 +48,9 @@ class DivideRoles extends Component {
                     <DivideCard name='Roles:'>
                         <RoleCard roles={this.state.roles} />
                     </DivideCard>
+                    <Text style={styles.room}>
+                        Game is about to start
+                    </Text>
                 </ScrollView>
             </View>
         );
@@ -52,7 +63,6 @@ const styles = {
         backgroundColor: '#2a3238'
     },
     background: {
-        flex: 1,
         backgroundColor: '#222c31',
         marginTop: 20,
         padding: 20

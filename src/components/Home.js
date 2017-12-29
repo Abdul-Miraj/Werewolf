@@ -9,7 +9,6 @@ export default class Home extends React.Component {
         return (
             <View style={styles.container}>
                 <Background uri={require('../img/Bg.jpg')}>
-
                     <Text style={styles.Title}>Werewolf</Text>
                     <View style={styles.btnContainer}>
                       <View style={styles.button}>
@@ -19,9 +18,7 @@ export default class Home extends React.Component {
                         <Btn text="Create Room" onPress= { () => {}} />
                       </View>
                     </View>
-
                 </Background>
-
             </View>
         );
     }
@@ -49,7 +46,6 @@ const styles = {
     button: {
       width: '40%',
       height: 40,
-
     },
 };
 

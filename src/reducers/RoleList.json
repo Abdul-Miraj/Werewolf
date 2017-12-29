@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "role": "Villager",
+        "description": "Find the werewolves and lynch them."
+    },
+    {
+        "id": 2,
+        "role": "Villager",
+        "description": "Find the werewolves and lynch them."
+    },
+    {
+        "id": 3,
+        "role": "Werewolf ",
+        "description": "Eat a villager each night."
+    },
+    {
+        "id": 4,
+        "role": "Bodyguard",
+        "description": "Choose a different player each night to protect. That player cannot be killed that night."
+    },
+    {
+        "id": 5,
+        "role": "Seer",
+        "description": "Each night, select a player to see if they are either a villager, or werewolf."
+    }
+]
