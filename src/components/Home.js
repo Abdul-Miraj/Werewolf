@@ -11,12 +11,8 @@ export default class Home extends React.Component {
                 <Background uri={require('../img/Bg.jpg')}>
                     <Text style={styles.Title}>Werewolf</Text>
                     <View style={styles.btnContainer}>
-                      <View style={styles.button}>
-                        <Btn text="Join Room" onPress={() => this.props.navigation.navigate('Roles')} />
-                      </View>
-                      <View style={styles.button}>
-                        <Btn text="Create Room" onPress= { () => {}} />
-                      </View>
+                        <Btn text="Join Room" onPress={() => this.props.navigation.navigate('Night')} />
+                        <Btn text="Create Room" onPress={() => this.props.navigation.navigate('Roles')} />
                     </View>
                 </Background>
             </View>
@@ -29,23 +25,16 @@ const styles = {
         flex: 1,
     },
     Title: {
-        justifyContent: 'center',
         alignSelf: 'center',
         margin: 40,
         fontSize: 30,
         fontWeight: '500',
         color: 'white',
     },
-
     btnContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-    },
-
-    button: {
-      width: '40%',
-      height: 40,
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
     },
 };
 

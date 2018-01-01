@@ -5,6 +5,7 @@ import _ from 'lodash';
 import shuffle from 'shuffle-array';
 import DivideCard from './common/DivideCard';
 import RoleCard from './common/RoleCard';
+import roles from '../reducers/RoleList.json';
 
 // DivideRoles screen that imports all components
 class DivideRoles extends Component {
@@ -12,7 +13,6 @@ class DivideRoles extends Component {
         super(props);
         this.state = {
             username: 'OSAMAALHAQ', //should be passed down from props
-            roles: ['Werewolf', 'Villager', 'Villager', 'Bodyguard', 'Seer', 'Hunter', 'Witch', 'Werewolf']
         };
     }
     // convert arrary of objects into array of names
@@ -23,13 +23,15 @@ class DivideRoles extends Component {
         shuffle(players);
         // assign the roles and update the array
         for (let i=0; i < players.length; i++) {
-            players[i].role = this.state.roles[i];
+            players[i].role = roles[i].role;
         }
         // modify the player state
         
-        // get the index of my username and assign it the role
-        let index = _.map(players, 'name').indexOf(this.state.username);
-        return players[index].role;
+        // get the index of my username
+        let playerIndex = players.findIndex(x => x.name==this.state.username);
+        // get the index of my role and return that object
+        let roleIndex = roles.findIndex(x => x.role==players[playerIndex].role);
+        return roles[roleIndex];
     };
 
     render() {
@@ -46,7 +48,7 @@ class DivideRoles extends Component {
                         <RoleCard roles={[this.assignRole()]} />
                     </DivideCard>
                     <DivideCard name='Roles:'>
-                        <RoleCard roles={this.state.roles} />
+                        <RoleCard roles={roles.slice(0, this.props.players.length)} />
                     </DivideCard>
                     <Text style={styles.room}>
                         Game is about to start

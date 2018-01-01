@@ -8,8 +8,8 @@ import {
 createCard = (roles) => {
     return (
         roles.map(role => (
-            <Text key={role} style={styles.name} >
-                {role}
+            <Text key={role.id} style={styles.name} >
+                {role.role}
             </Text>
         ))
     );

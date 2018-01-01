@@ -8,12 +8,13 @@ import {
 } from 'react-navigation';
 import Home from '../components/Home';
 import DivideRoles from '../components/DivideRoles';
-
+import Night from '../components/Night';
 
 // Put each screen here
 export const AppNavigator = StackNavigator({
     Home: { screen: Home },
-    Roles: { screen: DivideRoles }
+    Roles: { screen: DivideRoles },
+    Night: { screen: Night },
 });
 
 // wire up the Android back button
