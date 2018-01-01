@@ -2,14 +2,14 @@ import React from 'react';
 import {
     Text,
     View,
-    Dimensions
+    Dimensions,
 } from 'react-native';
 
 // Component to divide the role sections
 const DivideCard = (props) => {
     return (
         <View>
-            <View style={styles.bar} />
+            <View style={styles.bar}/>
             <Text style={styles.name}>
                 {props.name}
             </Text>
@@ -25,7 +25,7 @@ const styles = {
         color: '#f0f0f0'
     },
     bar: {
-        width: Dimensions.get('screen').width - 40,
+        width: '100%',//Dimensions.get('screen').width - 40,
         height: 2,
         backgroundColor: '#2a3238',
         margin: 10,
