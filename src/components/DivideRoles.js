@@ -13,8 +13,10 @@ class DivideRoles extends Component {
         super(props);
         this.state = {
             username: 'OSAMAALHAQ', //should be passed down from props
+            time: 15
         };
     }
+
     // convert arrary of objects into array of names
     assignRole = () => {
         let players = this.props.players;
@@ -54,7 +56,7 @@ class DivideRoles extends Component {
                     </DivideCard>
                 </ScrollView>
                 <Text style={styles.gameText}>
-                    Game is about to start in 15 seconds
+                    Game is about to start in {this.state.time} seconds
                 </Text>
             </View>
         );
