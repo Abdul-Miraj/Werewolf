@@ -68,6 +68,9 @@ class Night extends Component {
                 </View>
                 <View style={styles.night} >
                     <PlayerSelection players={this.props.players} />
+                    <Text>
+                        You Have Chosen: Player 2
+                    </Text>
                 </View>
             </View>
         );

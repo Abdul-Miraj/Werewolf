@@ -4,18 +4,23 @@ import { Button, View } from 'react-native';
 
 const Btn = (props) => {
   return (
-    <View style={styles.button} >
-      <Button title={props.text} onPress={props.onPress} />
+    <View style={styles.container} >
+      <Button style={styles.button} title={props.text} onPress={props.onPress} />
     </View>
   );
 };
 
 styles = {
-  button: {
+  container: {
     width: '40%',
     height: 40,
     margin: 10
   },
+  button: {
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#fff',
+  }
 };
 
 export default Btn;
