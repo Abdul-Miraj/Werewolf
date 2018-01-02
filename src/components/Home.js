@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import Background from './common/Background';
 import Btn from './common/Button';
 
@@ -9,15 +9,29 @@ export default class Home extends Component {
         super(props);
         this.state = {
             render: 0,
+            joinText: 'Room Code',
+            nameText: 'Enter Nickname'
         };
     }
 
     // render component when you join game
     joinRoom = () => {
         return (
-            <View style={styles.btnContainer}>
-                <Btn text="Join" onPress={() => this.props.navigation.navigate('Night')} />
-                <Btn text="Back" onPress={() => this.setState({ render: 0 })} />
+            <View>
+                <TextInput
+                    style={{ height: 40, borderColor: '#fff', margin: 10, padding: 2, borderWidth: 1 }}
+                    onChangeText={(nameText) => this.setState({ nameText })}
+                    value={this.state.nameText}
+                />
+                <TextInput
+                    style={{ height: 40, borderColor: '#fff', margin: 10, padding: 2, borderWidth: 1 }}
+                    onChangeText={(joinText) => this.setState({ joinText })}
+                    value={this.state.joinText}
+                />
+                <View style={styles.btnContainer}>
+                    <Btn text="Join" onPress={() => this.props.navigation.navigate('Night')} />
+                    <Btn text="Back" onPress={() => this.setState({ render: 0 })} />
+                </View>
             </View>
         );
     };
@@ -25,9 +39,16 @@ export default class Home extends Component {
     // render component when you create game
     createRoom = () => {
         return (
-            <View style={styles.btnContainer}>
-                <Btn text="Create" onPress={() => this.props.navigation.navigate('Roles')} />
-                <Btn text="Back" onPress={() => this.setState({ render: 0 })} />
+            <View>
+                <TextInput
+                    style={{ height: 40, borderColor: '#fff', margin: 10, padding: 2, borderWidth: 1 }}
+                    onChangeText={(nameText) => this.setState({ nameText })}
+                    value={this.state.nameText}
+                />
+                <View style={styles.btnContainer}>
+                    <Btn text="Create" onPress={() => this.props.navigation.navigate('Roles')} />
+                    <Btn text="Back" onPress={() => this.setState({ render: 0 })} />
+                </View>
             </View>
         );
     };

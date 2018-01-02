@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import CountdownCircle from 'react-native-countdown-circle';
-import PlayerSelection from './common/PlayerSelection';
+import PlayerSelection from './PlayerSelection';
+import shuffle from 'shuffle-array';
 
 // Home screen that imports all components
 class Night extends Component {
@@ -16,7 +17,11 @@ class Night extends Component {
         };
     }
 
+    // Get my player object based on my username
+
     // find the roles from order first
+
+        // check if players.roles contains order and not in wokenUp
 
     // put the players woken up in the wokenUp array - villagers default
 
@@ -49,28 +54,34 @@ class Night extends Component {
 
     wakePlayer = () => {
         return (
-            <View>
+            <View style={{ flex: 1 }} >
                 <View style={{ paddingTop: 40, flexDirection: 'row' }}>
-                    <Text style={{ width: '80%', padding: 20, paddingTop: 10, fontWeight: '600', color: '#fff', fontSize: 18, textAlign: 'center' }}>
-                        Select a player that you would like to investigate!
+                    <Text style={{ width: '80%', padding: 20, paddingTop: 10, fontWeight: '500', color: '#fff', fontSize: 18, textAlign: 'left' }}>
+                    <Text style={{ color: '#4fd09a' }} >Werewolves</Text>: Select 1 player to eat tonight!
                     </Text>
                     <View style={{ flex: 1, alignSelf: 'flex-end', alignItems: 'flex-end', padding: 20, paddingTop: 0 }}>
                         <CountdownCircle
-                            seconds={29}
+                            seconds={299}
                             radius={30}
                             borderWidth={4}
                             color="#4fd09a"
                             bgColor="#222c31"
                             textStyle={{ fontSize: 20, color: '#4fd09a' }}
-                            onTimeElapsed={() => console.log('Elapsed!')} // update the state of the players woken up
+                            onTimeElapsed={() =>  this.setState({
+                                isWoke: !this.state.isWoke,
+                            })} // update the state of the players woken up
                         />
                     </View>
                 </View>
-                <View style={styles.night} >
-                    <PlayerSelection players={this.props.players} />
-                    <Text>
-                        You Have Chosen: Player 2
-                    </Text>
+                <View style={styles.night}>
+                    <ScrollView contentContainerStyle={{ flexGrow: 1 }} >
+                        <PlayerSelection players={shuffle(this.props.players)} role={'Bodyguard'} />
+                    </ScrollView>
+                    <View style={{ alignItems: 'flex-end', justifyContent: 'flex-end', padding: 8 }}>
+                        <Text style={{ color: '#4fd09a' }} >
+                            You Have Chosen: Player 2
+                        </Text>
+                    </View>
                 </View>
             </View>
         );
@@ -110,7 +121,8 @@ Night.navigationOptions = {
 
 const mapStateToProps = state => {
     return {
-        players: state.players
+        players: state.players,
+        night: state.night
     };
 };
 
