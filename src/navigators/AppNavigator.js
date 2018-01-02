@@ -9,12 +9,14 @@ import {
 import Home from '../components/Home';
 import DivideRoles from '../components/DivideRoles';
 import Night from '../components/Night';
+import Lobby from '../components/Lobby';
 
 // Put each screen here
 export const AppNavigator = StackNavigator({
     Home: { screen: Home },
     Roles: { screen: DivideRoles },
     Night: { screen: Night },
+    Lobby: { screen: Lobby},
 });
 
 // wire up the Android back button

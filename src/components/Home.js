@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import Background from './common/Background';
 import Btn from './common/Button';
+import TxtInput from './common/TextInput';
 
 // Home screen that imports all components
 export default class Home extends Component {
@@ -12,12 +13,13 @@ export default class Home extends Component {
           };
       }
 
+
       createRoom = () => {
           return (
-              <View style={styles.btnContainer}>
-                  <Btn text="Back" onPress={() => this.setState({ render: 0 })} />
-                  <Btn text="Create Room"  onPress={() => this.props.navigation.navigate('Night')}  />
-              </View>
+            <View>
+              <TxtInput />
+              <Btn text="Create Room" onPress={() => this.props.navigation.navigate('Lobby')} />
+            </View>
           );
       };
 
