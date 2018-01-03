@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ImageBackground, View } from 'react-native';
+import { StyleSheet, ImageBackground, View, Text } from 'react-native';
 
 // Component to display image ass full screen
 export default class background extends Component {
@@ -7,6 +7,11 @@ export default class background extends Component {
         return (
             <ImageBackground source={this.props.uri} style={styles.background} >
                 <View style={styles.center} >{this.props.children}</View>
+                <View style={styles.dev}>
+                    <Text style={{ color: '#fff' }}>
+                        Developed by Fauzan, Osama, Obaid
+                    </Text>
+                </View>
             </ImageBackground >
         );
     }
@@ -23,5 +28,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingTop: 180
+    },
+    dev: {
+        margin: 20,
+        alignItems: 'center'
     }
 });

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text } from 'react-native';
 import Background from './common/Background';
 import Btn from './common/Button';
+import TxtInput from './common/TextInput';
 
 // Home screen that imports all components
 export default class Home extends Component {
@@ -18,16 +19,8 @@ export default class Home extends Component {
     joinRoom = () => {
         return (
             <View>
-                <TextInput
-                    style={{ height: 40, borderColor: '#fff', margin: 10, padding: 2, borderWidth: 1 }}
-                    onChangeText={(nameText) => this.setState({ nameText })}
-                    value={this.state.nameText}
-                />
-                <TextInput
-                    style={{ height: 40, borderColor: '#fff', margin: 10, padding: 2, borderWidth: 1 }}
-                    onChangeText={(joinText) => this.setState({ joinText })}
-                    value={this.state.joinText}
-                />
+                <TxtInput />
+                <TxtInput />
                 <View style={styles.btnContainer}>
                     <Btn text="Join" onPress={() => this.props.navigation.navigate('Night')} />
                     <Btn text="Back" onPress={() => this.setState({ render: 0 })} />
@@ -40,11 +33,7 @@ export default class Home extends Component {
     createRoom = () => {
         return (
             <View>
-                <TextInput
-                    style={{ height: 40, borderColor: '#fff', margin: 10, padding: 2, borderWidth: 1 }}
-                    onChangeText={(nameText) => this.setState({ nameText })}
-                    value={this.state.nameText}
-                />
+                <TxtInput />
                 <View style={styles.btnContainer}>
                     <Btn text="Create" onPress={() => this.props.navigation.navigate('Roles')} />
                     <Btn text="Back" onPress={() => this.setState({ render: 0 })} />
@@ -73,9 +62,9 @@ export default class Home extends Component {
                     {this.state.render == '2' ? this.joinRoom() : null}
                 </Background>
             </View>
-        );
-    }
-}
+          );
+      };
+  }
 
 const styles = {
     container: {
@@ -91,6 +80,7 @@ const styles = {
     },
     btnContainer: {
         flexDirection: 'row',
+        alignSelf: 'center',
     },
 };
 

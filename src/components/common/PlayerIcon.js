@@ -5,6 +5,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 
+// Return true if you want to select my role/ myself
 showTeam = (myRole, role) => {
     let show = true;
     if (myRole == 'Bodyguard') {

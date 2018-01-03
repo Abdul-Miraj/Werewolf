@@ -12,8 +12,7 @@ class Night extends Component {
         this.state = {
             night: 1,
             isWoke: true, // default false
-            wokenUp: [],
-            order: ['werewolf', 'witch']
+            role: 'Werewolf'
         };
     }
 
@@ -44,6 +43,10 @@ class Night extends Component {
         clearInterval(this._interval);
     } */
 
+    componentDidMount() {
+        console.log(this.props);
+    }
+
     renderNight = () => {
         return (
             <View style={styles.night}>
@@ -57,7 +60,7 @@ class Night extends Component {
             <View style={{ flex: 1 }} >
                 <View style={{ paddingTop: 40, flexDirection: 'row' }}>
                     <Text style={{ width: '80%', padding: 20, paddingTop: 10, fontWeight: '500', color: '#fff', fontSize: 18, textAlign: 'left' }}>
-                    <Text style={{ color: '#4fd09a' }} >Werewolves</Text>: Select 1 player to eat tonight!
+                    <Text style={{ color: '#4fd09a' }} >{this.state.role}</Text> : Select 1 player to eat tonight!
                     </Text>
                     <View style={{ flex: 1, alignSelf: 'flex-end', alignItems: 'flex-end', padding: 20, paddingTop: 0 }}>
                         <CountdownCircle
@@ -75,7 +78,7 @@ class Night extends Component {
                 </View>
                 <View style={styles.night}>
                     <ScrollView contentContainerStyle={{ flexGrow: 1 }} >
-                        <PlayerSelection players={shuffle(this.props.players)} role={'Bodyguard'} />
+                        <PlayerSelection players={shuffle(this.props.players)} role={this.state.role} />
                     </ScrollView>
                     <View style={{ alignItems: 'flex-end', justifyContent: 'flex-end', padding: 8 }}>
                         <Text style={{ color: '#4fd09a' }} >
