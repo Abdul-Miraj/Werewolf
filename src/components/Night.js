@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
+import * as actions from '../actions';
 import CountdownCircle from 'react-native-countdown-circle';
 import PlayerSelection from './PlayerSelection';
 import shuffle from 'shuffle-array';
@@ -12,7 +13,7 @@ class Night extends Component {
         this.state = {
             night: 1,
             isWoke: true, // default false
-            role: 'Werewolf'
+            role: 'Seer',
         };
     }
 
@@ -20,7 +21,7 @@ class Night extends Component {
 
     // find the roles from order first
 
-        // check if players.roles contains order and not in wokenUp
+    // check if players.roles contains order and not in wokenUp
 
     // put the players woken up in the wokenUp array - villagers default
 
@@ -45,6 +46,16 @@ class Night extends Component {
 
     componentDidMount() {
         console.log(this.props);
+        shuffle(this.props.players);
+        const night = {
+            Night: this.state.night
+        };
+        this.props.players.map(player => {
+            if (player.isDead == false) {
+                night[player.role] = '';
+            }
+        });
+        this.props.addNight(night);
     }
 
     renderNight = () => {
@@ -55,22 +66,22 @@ class Night extends Component {
         );
     };
 
-    wakePlayer = () => {
+    renderWake = () => {
         return (
             <View style={{ flex: 1 }} >
                 <View style={{ paddingTop: 40, flexDirection: 'row' }}>
                     <Text style={{ width: '80%', padding: 20, paddingTop: 10, fontWeight: '500', color: '#fff', fontSize: 18, textAlign: 'left' }}>
-                    <Text style={{ color: '#4fd09a' }} >{this.state.role}</Text> : Select 1 player to eat tonight!
+                        <Text style={{ fontSize: 22, color: '#4fd09a' }} >{this.state.role}</Text>: Select 1 player to investigate!
                     </Text>
                     <View style={{ flex: 1, alignSelf: 'flex-end', alignItems: 'flex-end', padding: 20, paddingTop: 0 }}>
                         <CountdownCircle
                             seconds={299}
-                            radius={30}
+                            radius={25}
                             borderWidth={4}
                             color="#4fd09a"
                             bgColor="#222c31"
                             textStyle={{ fontSize: 20, color: '#4fd09a' }}
-                            onTimeElapsed={() =>  this.setState({
+                            onTimeElapsed={() => this.setState({
                                 isWoke: !this.state.isWoke,
                             })} // update the state of the players woken up
                         />
@@ -78,11 +89,11 @@ class Night extends Component {
                 </View>
                 <View style={styles.night}>
                     <ScrollView contentContainerStyle={{ flexGrow: 1 }} >
-                        <PlayerSelection players={shuffle(this.props.players)} role={this.state.role} />
+                        <PlayerSelection players={this.props.players} role={this.state.role} />
                     </ScrollView>
                     <View style={{ alignItems: 'flex-end', justifyContent: 'flex-end', padding: 8 }}>
                         <Text style={{ color: '#4fd09a' }} >
-                            You Have Chosen: Player 2
+                            You have selected {this.props.night[this.state.role] == null ? '' : this.props.night[this.state.role]}
                         </Text>
                     </View>
                 </View>
@@ -90,10 +101,14 @@ class Night extends Component {
         );
     };
 
+    wakePlayer = () => {
+
+    };
+
     render() {
         return (
             <View style={styles.container}>
-                {this.state.isWoke ? this.wakePlayer() : this.renderNight()}
+                {this.state.isWoke ? this.renderWake() : this.renderNight()}
             </View>
         );
     }
@@ -129,4 +144,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(Night);
+export default connect(mapStateToProps, actions)(Night);

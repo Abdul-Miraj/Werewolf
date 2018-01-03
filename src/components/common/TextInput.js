@@ -19,7 +19,7 @@ export default class TxtInput extends Component {
 
 const styles = {
     TextBox: {
-        height:40, 
-        borderWidth:2,
+        height: 40,
+        borderWidth: 2,
     },
 };

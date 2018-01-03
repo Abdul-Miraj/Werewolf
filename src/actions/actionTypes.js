@@ -1,2 +1,5 @@
 export const ASSIGN_ROLES = 'ASSIGN_ROLES';
-export const NIGHT = 'NIGHT';
+export const ADD_NIGHT = 'ADD_NIGHT';
+export const UPDATE_NIGHT = 'UPDATE_NIGHT';
+export const GET_NIGHT = 'GET_NIGHT';
+export const GET_ROLES = 'GET_ROLES';
