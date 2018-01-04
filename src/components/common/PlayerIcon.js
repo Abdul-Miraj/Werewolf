@@ -28,9 +28,10 @@ class PlayerIcon extends Component {
     }
 
 
-    // Return true if you want to select my role/ myself
+    // Return true if you want to select yourself
     showTeam = () => {
         let show = true;
+        // Bodygurad is able to select themselves
         if (this.state.myRole == 'Bodyguard') {
             return show;
         }
@@ -40,9 +41,10 @@ class PlayerIcon extends Component {
         return show;
     };
 
+    // helper function to store data in state
     storeChoice = () => {
+        // If you are the seer only see team not role
         if (this.state.myRole == 'Seer') {
-            // return team
             if (this.state.player.role != 'Werewolf') {
                 return 'Villager';
             } else {
@@ -51,12 +53,13 @@ class PlayerIcon extends Component {
         } else if (this.state.myRole == 'Werewolf') {
 
         } else {
-            // return players role
+            // return players name otherwise
             return this.state.player.name;
         }
     };
 
-    canSelect = () => {
+    // function that allows one selection
+    allowSelect = () => {
         this.setState({ container: styles.container });
         this.props.updateNight({ role: this.state.myRole, value: this.storeChoice() });
     };
@@ -66,7 +69,7 @@ class PlayerIcon extends Component {
         const { id, name } = this.state.player;
         return (
             <TouchableOpacity key={id} onPress={() => {
-                {this.props.night[this.state.myRole] == null ? this.canSelect() : null}
+                { this.props.night[this.state.myRole] == null ? this.allowSelect() : null }
             }}>
                 <View key={id} style={this.showTeam() ? this.state.container : styles.hide}>
                     <Text key={id} style={styles.name}>

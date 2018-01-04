@@ -12,21 +12,21 @@
     {
         "id": 3,
         "role": "Werewolf",
-        "description": "Eat a villager each night."
+        "description": "Select a player that you would like to eat."
     },
     {
         "id": 4,
         "role": "Bodyguard",
-        "description": "Choose a different player each night to protect. That player cannot be killed that night."
+        "description": "Select a player that you would like to protect."
     },
     {
         "id": 5,
         "role": "Seer",
-        "description": "Each night, select a player to see if they are either a villager, or werewolf."
+        "description": "Select a player that you would like to investigate."
     },
     {
         "id": 6,
         "role": "Hunter",
-        "description": "When you die, select a player to take down with you. Remember you are also a villager"
+        "description": "Select a player that you would like to kill."
     }
 ]
