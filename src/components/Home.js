@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import Background from './common/Background';
-import Btn from './common/Button';
+import ButtonSet from './common/ButtonSet';
 
 // Home screen that imports all components
 class Home extends Component {
@@ -12,7 +12,7 @@ class Home extends Component {
         super(props);
         this.state = {
             render: 0,
-            error: ''
+            error: '',
         };
     }
 
@@ -23,9 +23,18 @@ class Home extends Component {
         if ((name == null) || (name.length < 2)) {
             this.setState({ error: 'Name Field Invalid' });
         } else {
+            //{room ? null : null}
             this.setState({ error: '' });
             // update the redux state with name and room code
             this.props.setUser(name);
+            // check if there is a room to store
+            if (values['Room Code'] != null) {
+                this.props.setRoom(values['Room Code']);
+            }
+            // server
+
+            // set playerstate
+
             this.props.navigation.navigate('Lobby');
         }
     };
@@ -54,10 +63,12 @@ class Home extends Component {
                     name='Room Code'
                     component={this.renderInput}
                 />
-                <View style={styles.btnContainer}>
-                    <Btn text="Join" onPress={this.props.handleSubmit(this.submit)} />
-                    <Btn text="Back" onPress={() => this.setState({ render: 0 })} />
-                </View>
+                <ButtonSet
+                    btnTextOne="Join"
+                    btnPressOne={this.props.handleSubmit(this.submit)}
+                    btnTextTwo="Back"
+                    btnPressTwo={() => this.setState({ render: 0 })}
+                />
             </View>
         );
     };
@@ -70,10 +81,12 @@ class Home extends Component {
                     name='Name'
                     component={this.renderInput}
                 />
-                <View style={styles.btnContainer}>
-                    <Btn text="Create" onPress={this.props.handleSubmit(this.submit)} />
-                    <Btn text="Back" onPress={() => this.setState({ render: 0 })} />
-                </View>
+                <ButtonSet
+                    btnTextOne="Create"
+                    btnPressOne={this.props.handleSubmit(this.submit)}
+                    btnTextTwo="Back"
+                    btnPressTwo={() => this.setState({ render: 0 })}
+                />
             </View>
         );
     };
@@ -81,10 +94,12 @@ class Home extends Component {
     // default buttons to render
     renderDefault = () => {
         return (
-            <View style={styles.btnContainer}>
-                <Btn text="New Game" onPress={() => this.setState({ render: 1 })} />
-                <Btn text="Join Game" onPress={() => this.setState({ render: 2 })} />
-            </View>
+            <ButtonSet
+                btnTextOne="New Game"
+                btnPressOne={() => this.setState({ render: 1 })}
+                btnTextTwo="Join Game"
+                btnPressTwo={() => this.setState({ render: 2 })}
+            />
         );
     };
 
@@ -115,10 +130,6 @@ const styles = {
         fontWeight: '500',
         color: 'white',
     },
-    btnContainer: {
-        flexDirection: 'row',
-        alignSelf: 'center',
-    },
     TextBox: {
         height: 40,
         borderWidth: 2,
@@ -134,12 +145,6 @@ const styles = {
     }
 };
 
-const mapStateToProps = state => {
-    return {
-        user: state.username,
-    };
-};
-
 // Hide the navigation
 Home.navigationOptions = {
     header: null,
@@ -147,4 +152,4 @@ Home.navigationOptions = {
 
 export default reduxForm({
     form: 'Room'
-})(connect(mapStateToProps, actions)(Home));
+})(connect(null, actions)(Home));

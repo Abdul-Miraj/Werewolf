@@ -68,11 +68,13 @@ class PlayerIcon extends Component {
     render() {
         const { id, name } = this.state.player;
         return (
-            <TouchableOpacity key={id} onPress={() => {
-                { this.props.night[this.state.myRole] == null ? this.allowSelect() : null }
+            <TouchableOpacity onPress={() => {
+                if (this.props.role != null) {
+                    { this.props.night[this.state.myRole] == null ? this.allowSelect() : null }
+                }
             }}>
-                <View key={id} style={this.showTeam() ? this.state.container : styles.hide}>
-                    <Text key={id} style={styles.name}>
+                <View style={this.showTeam() ? this.state.container : styles.hide}>
+                    <Text style={styles.name}>
                         {name}
                     </Text>
                 </View>

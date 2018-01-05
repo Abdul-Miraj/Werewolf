@@ -4,41 +4,56 @@ import {
     View,
     TouchableWithoutFeedback
 } from 'react-native';
-import PlayerIcon from './common/PlayerIcon';
+import { connect } from 'react-redux';
+import PlayerSelection from './PlayerSelection';
+import ButtonSet from './common/ButtonSet';
 
-// For each player create an icon card
-renderIcons = (players, role) => {
-    return (
-        players.map(player => (
-            <PlayerIcon player={player} myRole={role}/> // myRole is the role of the team that is awake
-        ))
-    );
-};
-
-// Component thats decide which players can be voted for
+// Component thats displays a list of players in lobby
 const Lobby = (props) => {
     return (
-        <View style={{ flex: 1, alignItems: 'center', }} >
-            <View style={styles.container} >
-                <Text>Lobby</Text>
+        <View style={styles.container} >
+            <View style={{ alignItems: 'center', padding: 30, paddingTop: 40 }}>
+                <Text style={styles.header}>Waiting for players!</Text>
+                <Text style={styles.room} >Room Code: {props.room}</Text>
             </View>
+            <PlayerSelection players={props.players} role={null} />
+            <ButtonSet
+                btnTextOne="Start Game"
+                btnPressOne={() => props.navigation.navigate('Roles')}
+                btnTextTwo="Leave Game"
+                btnPressTwo={() => props.navigation.navigate('Home')}
+            />
         </View>
     );
 };
 
 const styles = {
     container: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
+        backgroundColor: '#222c31',
     },
+    header: {
+        color: '#f0f0f0',
+        fontSize: 26
+    },
+    room: {
+        color: '#f0f0f0',
+        fontSize: 18
+    }
 };
+
+const mapStateToProps = state => {
+    return {
+        username: state.username,
+        room: state.room,
+        players: state.players
+    };
+};
+
 
 // Hide the navigation
 Lobby.navigationOptions = {
     header: null,
 };
 
-export default Lobby;
+export default connect(mapStateToProps)(Lobby);

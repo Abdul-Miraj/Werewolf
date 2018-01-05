@@ -10,7 +10,7 @@ import PlayerIcon from './common/PlayerIcon';
 renderIcons = (players, role) => {
     return (
         players.map(player => (
-            <PlayerIcon player={player} myRole={role}/> // myRole is the role of the team that is awake
+            <PlayerIcon key={player.id} player={player} myRole={role}/> // myRole is the role of the team that is awake
         ))
     );
 };
