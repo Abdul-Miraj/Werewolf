@@ -69,7 +69,7 @@ class PlayerIcon extends Component {
         const { id, name } = this.state.player;
         return (
             <TouchableOpacity onPress={() => {
-                if (this.props.role != null) {
+                if (this.props.myRole != null) {
                     { this.props.night[this.state.myRole] == null ? this.allowSelect() : null }
                 }
             }}>

@@ -14,7 +14,7 @@ class Night extends Component {
         this.state = {
             night: 1,
             isWoke: true, // default false
-            serverRole: 'Seer',
+            serverRole: 'Bodyguard',
             username: 'OSAMAALHAQ'
         };
     }
@@ -53,7 +53,7 @@ class Night extends Component {
     renderWake = () => {
         return (
             <WakePlayer night={this.props.night[this.state.serverRole]} role={this.state.serverRole}>
-                <PlayerSelection players={shuffle(this.props.players)} role={this.state.serverRole} />
+                <PlayerSelection players={this.props.players} role={this.state.serverRole} />
             </WakePlayer>
         );
     };
@@ -62,7 +62,7 @@ class Night extends Component {
         // if myrole is same as server then display selection
         let players = this.props.players;
         let playerIndex = players.findIndex(x => x.name == this.state.username);
-        return players[playerIndex].role == this.state.serverRole;
+        return true;//players[playerIndex].role == this.state.serverRole;
     };
 
     render() {
@@ -100,7 +100,8 @@ Night.navigationOptions = {
 const mapStateToProps = state => {
     return {
         players: state.players,
-        night: state.night
+        night: state.night,
+        username: state.username,
     };
 };
 

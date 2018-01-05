@@ -19,6 +19,12 @@ export default (state = initialNavState, action) => {
                 state
             );
             break;
+        case 'Night':
+            nextState = AppNavigator.router.getStateForAction(
+                NavigationActions.navigate({ routeName: 'Night' }),
+                state
+            );
+            break;
         default:
             nextState = AppNavigator.router.getStateForAction(action, state);
             break;

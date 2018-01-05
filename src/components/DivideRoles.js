@@ -12,8 +12,8 @@ class DivideRoles extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: 'OSAMAALHAQ', //should be passed down from props
-            time: 15
+            username: 'OSAMAALHAQ',//props.username,
+            room: props.room,
         };
     }
 
@@ -41,7 +41,7 @@ class DivideRoles extends Component {
             <View style={styles.container} >
                 <View style={{ margin: 30, marginBottom: 10, paddingTop: 10 }}>
                     <Text style={styles.room}>
-                        3YJX
+                        {this.state.room}
                     </Text>
                     <Text style={styles.name}>
                         {this.state.username}
@@ -55,9 +55,6 @@ class DivideRoles extends Component {
                         <RoleCard roles={roles.slice(0, this.props.players.length)} />
                     </DivideCard>
                 </ScrollView>
-                <Text style={styles.gameText}>
-                    Game is about to start in {this.state.time} seconds
-                </Text>
             </View>
         );
     }
@@ -82,23 +79,18 @@ const styles = {
         fontWeight: '300',
         color: '#f0f0f0'
     },
-    gameText: {
-        fontSize: 16,
-        alignSelf: 'center',
-        padding: 10,
-        color: '#FFF'
-    }
 };
 
 // Hide the navigation
 DivideRoles.navigationOptions = {
     header: null
-    //headerTitle: '',
 };
 
 const mapStateToProps = state => {
     return {
-        players: state.players
+        players: state.players,
+        username: state.username,
+        room: state.room
     };
 };
 
