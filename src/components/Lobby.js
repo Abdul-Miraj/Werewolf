@@ -5,6 +5,7 @@ import {
     TouchableWithoutFeedback
 } from 'react-native';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 import PlayerSelection from './PlayerSelection';
 import ButtonSet from './common/ButtonSet';
 
@@ -19,9 +20,9 @@ const Lobby = (props) => {
             <PlayerSelection players={props.players} role={null} />
             <ButtonSet
                 btnTextOne="Start Game"
-                btnPressOne={() => props.navigation.navigate('Roles')}
+                btnPressOne={() => props.dispatch({ type: 'Roles' })}
                 btnTextTwo="Leave Game"
-                btnPressTwo={() => props.navigation.navigate('Home')}
+                btnPressTwo={() => props.navigation.dispatch(NavigationActions.back())}
             />
         </View>
     );
@@ -31,6 +32,7 @@ const styles = {
     container: {
         flex: 1,
         backgroundColor: '#222c31',
+        paddingBottom: 10
     },
     header: {
         color: '#f0f0f0',

@@ -1,11 +1,14 @@
 import React from 'react';
-import { Button, View } from 'react-native';
+import { View } from 'react-native';
+import Button from 'apsl-react-native-button';
 
-
+// custom button component
 const Btn = (props) => {
   return (
     <View style={styles.container} >
-      <Button style={styles.button} title={props.text} onPress={props.onPress} />
+      <Button style={styles.button} textStyle={styles.text} onPress={props.onPress}>
+        {props.text}
+      </Button>
     </View>
   );
 };
@@ -17,10 +20,19 @@ styles = {
     margin: 10
   },
   button: {
+    backgroundColor: 'rgba(0,0,0,0)',
+    borderWidth: 2,
+    borderColor: 'white',
     borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#fff',
-    color: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    elevation: 1,
+  },
+  text: {
+    color: 'white',
+    fontSize: 14
   }
 };
 

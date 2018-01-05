@@ -7,15 +7,15 @@ const initialNavState = AppNavigator.router.getStateForAction('Home');
 export default (state = initialNavState, action) => {
     let nextState;
     switch (action.type) {
-        case 'Login':
+        case 'Back':
             nextState = AppNavigator.router.getStateForAction(
                 NavigationActions.back(),
                 state
             );
             break;
-        case 'Logout':
+        case 'Roles':
             nextState = AppNavigator.router.getStateForAction(
-                NavigationActions.navigate({ routeName: 'Login' }),
+                NavigationActions.navigate({ routeName: 'Roles' }),
                 state
             );
             break;

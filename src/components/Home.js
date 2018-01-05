@@ -29,7 +29,7 @@ class Home extends Component {
             this.props.setUser(name);
             // check if there is a room to store
             if (values['Room Code'] != null) {
-                this.props.setRoom(values['Room Code']);
+                this.props.setRoom(values['Room Code']); // might have to move this to lobby
             }
             // server
 
