@@ -20,6 +20,7 @@ styles = {
     borderRadius: 4,
     borderWidth: 1,
     borderColor: '#fff',
+    color: '#fff',
   }
 };
 
