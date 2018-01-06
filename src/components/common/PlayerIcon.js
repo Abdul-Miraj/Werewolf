@@ -68,18 +68,20 @@ class PlayerIcon extends Component {
     render() {
         const { name } = this.state.player;
         return (
-            <TouchableOpacity onPress={() => {
-                // role is null in the lobby screen
-                if (this.props.myRole != null) {
-                    { this.props.night[this.state.myRole] == null ? this.allowSelect() : null }
-                }
-            }}>
-                <View style={this.showTeam() ? this.state.container : styles.hide}>
-                    <Text style={styles.name}>
-                        {name}
-                    </Text>
-                </View>
-            </TouchableOpacity>
+            <View>
+                <TouchableOpacity onPress={() => {
+                    // role is null in the lobby screen
+                    if (this.props.myRole != null) {
+                        { this.props.night[this.state.myRole] == null ? this.allowSelect() : null }
+                    }
+                }}>
+                    <View style={this.showTeam() ? this.state.container : styles.hide}>
+                        <Text style={styles.name}>
+                            {name}
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
         );
     }
 }

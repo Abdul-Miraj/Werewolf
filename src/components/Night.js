@@ -14,7 +14,7 @@ class Night extends Component {
         this.state = {
             night: 1,
             isWoke: true, // default false
-            serverRole: 'Werewolf',
+            serverRole: 'Seer',
             username: 'OSAMAALHAQ'
         };
     }

@@ -25,7 +25,7 @@ class Home extends Component {
         } else {
 
             // connection to server is intialized
-            const socket = io('http://192.168.0.18:3000');
+            const socket = io('https://werewolf-server-1.herokuapp.com/');
 
             //{room ? null : null}
             this.setState({ error: '' });
@@ -44,6 +44,7 @@ class Home extends Component {
                 socket.emit('join-room', data);
 
                 this.props.setRoom(values['Room Code']); // might have to move this to lobby
+                this.props.addPlayer({id: 10, name: name, role: ''});
                 this.props.navigation.navigate('Lobby');
             } else {
 
