@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import Background from './common/Background';
 import ButtonSet from './common/ButtonSet';
+import io from 'socket.io-client'
 
 // Home screen that imports all components
 class Home extends Component {
@@ -17,25 +18,43 @@ class Home extends Component {
     }
 
     submit = values => {
-        console.log('submitting form', values);
         // check to see if the fields are non empty
         const name = values['Name'];
         if ((name == null) || (name.length < 2)) {
             this.setState({ error: 'Name Field Invalid' });
         } else {
+
+            // connection to server is intialized
+            const socket = io('http://192.168.1.10:3000');
+
             //{room ? null : null}
             this.setState({ error: '' });
             // update the redux state with name and room code
             this.props.setUser(name);
-            // check if there is a room to store
+
+            // user is attempting to join a room
             if (values['Room Code'] != null) {
+
+                const data = {
+                    roomId: values['Room Code'],
+                    playerName: name
+
+                };
+
+                socket.emit('join-room', data);
+
                 this.props.setRoom(values['Room Code']); // might have to move this to lobby
+                this.props.navigation.navigate('Lobby');
+            } else {
+
+                // user is creating a room 
+                socket.emit('create-room', null);
+
+                socket.on('roomCreated', (rk) => {
+                    this.props.setRoom(rk);
+                    this.props.navigation.navigate('Lobby');
+                });
             }
-            // server
-
-            // set playerstate
-
-            this.props.navigation.navigate('Lobby');
         }
     };
 
