@@ -14,11 +14,12 @@ class Night extends Component {
         this.state = {
             night: 1,
             isWoke: true, // default false
-            serverRole: 'Bodyguard',
+            serverRole: 'Werewolf',
             username: 'OSAMAALHAQ'
         };
     }
 
+    // create the new info object and pass to server each time 
     componentDidMount() {
         console.log(this.props);
         shuffle(this.props.players);

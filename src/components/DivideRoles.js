@@ -6,6 +6,7 @@ import shuffle from 'shuffle-array';
 import DivideCard from './common/DivideCard';
 import RoleCard from './common/RoleCard';
 import roles from '../reducers/RoleList.json';
+import CountdownCircle from 'react-native-countdown-circle';
 
 // DivideRoles screen that imports all components
 class DivideRoles extends Component {
@@ -39,13 +40,26 @@ class DivideRoles extends Component {
     render() {
         return (
             <View style={styles.container} >
-                <View style={{ margin: 30, marginBottom: 10, paddingTop: 10 }}>
-                    <Text style={styles.room}>
-                        {this.state.room}
-                    </Text>
-                    <Text style={styles.name}>
-                        {this.state.username}
-                    </Text>
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={{ margin: 30, marginBottom: 10, paddingTop: 10 }}>
+                        <Text style={styles.room}>
+                            {this.state.room}
+                        </Text>
+                        <Text style={styles.name}>
+                            {this.state.username}
+                        </Text>
+                    </View>
+                    <View style={styles.timer}>
+                        <CountdownCircle
+                            seconds={4}
+                            radius={25}
+                            borderWidth={4}
+                            color="#4fd09a"
+                            bgColor="#222c31"
+                            textStyle={{ fontSize: 20, color: '#4fd09a' }}
+                            onTimeElapsed={() => this.props.dispatch({ type: 'Night' })} // update the state of the players woken up
+                        />
+                    </View>
                 </View>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.scroll} >
                     <DivideCard name='My Role:'>
@@ -79,6 +93,13 @@ const styles = {
         fontWeight: '300',
         color: '#f0f0f0'
     },
+    timer: {
+        flex: 1,
+        paddingTop: 40,
+        paddingRight: 25,
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end'
+    }
 };
 
 // Hide the navigation

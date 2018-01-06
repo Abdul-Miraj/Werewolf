@@ -25,7 +25,7 @@ class Home extends Component {
         } else {
 
             // connection to server is intialized
-            const socket = io('http://192.168.1.10:3000');
+            const socket = io('http://192.168.0.18:3000');
 
             //{room ? null : null}
             this.setState({ error: '' });

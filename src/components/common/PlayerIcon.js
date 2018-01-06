@@ -51,7 +51,7 @@ class PlayerIcon extends Component {
                 return 'Werewolf';
             }
         } else if (this.state.myRole == 'Werewolf') {
-
+            // ww: { selections: [], kill: "" }
         } else {
             // return players name otherwise
             return this.state.player.name;
@@ -66,9 +66,10 @@ class PlayerIcon extends Component {
 
     // Component to create icon card
     render() {
-        const { id, name } = this.state.player;
+        const { name } = this.state.player;
         return (
             <TouchableOpacity onPress={() => {
+                // role is null in the lobby screen
                 if (this.props.myRole != null) {
                     { this.props.night[this.state.myRole] == null ? this.allowSelect() : null }
                 }

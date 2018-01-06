@@ -16,7 +16,7 @@ const WakePlayer = (props) => {
         <View style={{ flex: 1 }} >
             <View style={{ paddingTop: 40, flexDirection: 'row' }}>
                 <Text style={header}>
-                    <Text style={highlight} >{role.role}</Text>:  {role.description}
+                <Text style={highlight} >{role.role}</Text>: {role.description}
                 </Text>
                 <View style={timer}>
                     <CountdownCircle
