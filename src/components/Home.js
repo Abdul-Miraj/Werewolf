@@ -17,6 +17,10 @@ class Home extends Component {
         };
     }
 
+    callLobby = (Socket) => {
+
+    };
+
     submit = values => {
         // check to see if the fields are non empty
         const name = values['Name'];
@@ -34,27 +38,29 @@ class Home extends Component {
 
             // user is attempting to join a room
             if (values['Room Code'] != null) {
-
                 const data = {
                     roomId: values['Room Code'],
                     playerName: name
-
                 };
-
                 socket.emit('join-room', data);
-
+                // make into a function
                 this.props.setRoom(values['Room Code']); // might have to move this to lobby
                 this.props.addPlayer({id: 10, name: name, role: ''});
-                this.props.navigation.navigate('Lobby');
+                this.props.navigation.navigate(
+                    'Lobby',
+                    { socket },
+                  );
             } else {
-
                 // user is creating a room 
                 socket.emit('create-room', null);
                 // set the room code, and add the new player to the state once room is created
                 socket.on('roomCreated', (rk) => {
-                    this.props.setRoom(rk);
+                    this.props.setRoom(rk.room_id);
                     this.props.addPlayer({id: 10, name: name, role: ''});
-                    this.props.navigation.navigate('Lobby');
+                    this.props.navigation.navigate(
+                        'Lobby',
+                        { socket },
+                      );
                 });
             }
         }
