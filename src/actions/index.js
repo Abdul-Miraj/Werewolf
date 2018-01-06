@@ -1,4 +1,4 @@
-import { UPDATE_NIGHT, ADD_NIGHT, GET_NIGHT, USERNAME, ROOM } from './actionTypes';
+import { UPDATE_NIGHT, ADD_NIGHT, GET_NIGHT, USERNAME, ROOM, ADD_PLAYER } from './actionTypes';
 
 // update the night counter
 export const addNight = (night) => {
@@ -37,5 +37,13 @@ export const setRoom = (room) => {
   return {
     type: ROOM,
     payload: room  
+  };
+};
+
+// add a player
+export const addPlayer = (player) => {
+  return {
+    type: ADD_PLAYER,
+    payload: player  
   };
 };
