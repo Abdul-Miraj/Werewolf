@@ -44,7 +44,7 @@ class Lobby extends Component {
                     btnPressOne={() => this.props.navigation.dispatch({ type: 'Roles' })}
                     btnTextTwo="Leave Game"
                     btnPressTwo={() => {
-                        this.state.socket.on('disconnect', {});
+                        this.state.socket.emit('disconnect', {});
                         this.props.navigation.dispatch({ type: 'Back' })
                     }}
                 />

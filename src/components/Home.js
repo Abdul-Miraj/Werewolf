@@ -56,9 +56,6 @@ class Home extends Component {
                     player_name: name
                 };
                 socket.emit('join-room', data);
-                socket.on("New Error",(data) => {
-                    console.log(data);
-                });
                 // make into a function
                 this.callLobby(values['Room Code'], socket, name);
             } else {

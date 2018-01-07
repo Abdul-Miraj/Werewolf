@@ -6,7 +6,7 @@ import Button from 'apsl-react-native-button';
 const Btn = (props) => {
   return (
     <View style={styles.container} >
-      <Button style={styles.button} textStyle={styles.text} onPress={props.onPress}>
+      <Button isDisabled={props.isDisabled ? true : false} style={styles.button} textStyle={styles.text} onPress={props.onPress}>
         {props.text}
       </Button>
     </View>
