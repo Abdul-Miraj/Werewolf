@@ -52,10 +52,13 @@ class Home extends Component {
             // user is attempting to join a room
             if (values['Room Code'] != null) {
                 const data = {
-                    roomId: values['Room Code'],
-                    playerName: name
+                    room_id: values['Room Code'],
+                    player_name: name
                 };
                 socket.emit('join-room', data);
+                socket.on("New Error",(data) => {
+                    console.log(data);
+                });
                 // make into a function
                 this.callLobby(values['Room Code'], socket, name);
             } else {
