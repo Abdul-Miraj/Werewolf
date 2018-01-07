@@ -13,7 +13,7 @@ class DivideRoles extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: 'OSAMAALHAQ',//props.username,
+            username: props.username,
             room: props.room,
         };
     }
@@ -21,7 +21,6 @@ class DivideRoles extends Component {
     // convert arrary of objects into array of names
     assignRole = () => {
         let players = this.props.players;
-        console.log(players);
         // shuffle the players
         shuffle(players);
         // assign the roles and update the array

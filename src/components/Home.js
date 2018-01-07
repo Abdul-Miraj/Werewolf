@@ -20,7 +20,14 @@ class Home extends Component {
     // function to go to next screen and set the player name/room code
     callLobby = (roomCode, socket, name) => {
         this.props.setRoom(roomCode);
-        this.props.addPlayer({ id: 10, name: name, role: '' });
+        const player = {
+            "id": 3,
+            "name": name,
+            "isHost": false,
+            "role": "",
+            "isDead": false
+        };
+        this.props.addPlayer(player);
         this.props.navigation.navigate(
             'Lobby',
             { socket },

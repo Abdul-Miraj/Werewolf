@@ -32,7 +32,7 @@ class AppWithNavigationState extends Component {
         if (nav.index === 0) {
             return false;
         }
-        //dispatch(NavigationActions.back());
+        // when back button is pressed go home, erase players and connection
         dispatch({ type: 'Home' })
         return true;
     };
