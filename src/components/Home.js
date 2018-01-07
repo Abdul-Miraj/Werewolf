@@ -17,8 +17,14 @@ class Home extends Component {
         };
     }
 
-    callLobby = (Socket) => {
-
+    // function to go to next screen and set the player name/room code
+    callLobby = (roomCode, socket, name) => {
+        this.props.setRoom(roomCode);
+        this.props.addPlayer({ id: 10, name: name, role: '' });
+        this.props.navigation.navigate(
+            'Lobby',
+            { socket },
+        );
     };
 
     submit = values => {
@@ -44,23 +50,13 @@ class Home extends Component {
                 };
                 socket.emit('join-room', data);
                 // make into a function
-                this.props.setRoom(values['Room Code']); // might have to move this to lobby
-                this.props.addPlayer({id: 10, name: name, role: ''});
-                this.props.navigation.navigate(
-                    'Lobby',
-                    { socket },
-                  );
+                this.callLobby(values['Room Code'], socket, name);
             } else {
                 // user is creating a room 
                 socket.emit('create-room', null);
                 // set the room code, and add the new player to the state once room is created
                 socket.on('roomCreated', (rk) => {
-                    this.props.setRoom(rk.room_id);
-                    this.props.addPlayer({id: 10, name: name, role: ''});
-                    this.props.navigation.navigate(
-                        'Lobby',
-                        { socket },
-                      );
+                    this.callLobby(rk.room_id, socket, name);
                 });
             }
         }
@@ -73,6 +69,7 @@ class Home extends Component {
                 style={styles.TextBox}
                 onChangeText={onChange}
                 placeholder={restInput.name}
+                autoCapitalize="characters"
                 maxLength={restInput.name == 'Room Code' ? 5 : 10}
                 {...restInput} />
         );

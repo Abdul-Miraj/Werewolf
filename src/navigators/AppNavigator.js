@@ -32,7 +32,8 @@ class AppWithNavigationState extends Component {
         if (nav.index === 0) {
             return false;
         }
-        dispatch(NavigationActions.back());
+        //dispatch(NavigationActions.back());
+        dispatch({ type: 'Home' })
         return true;
     };
     render() {

@@ -1,4 +1,4 @@
-import { UPDATE_NIGHT, ADD_NIGHT, GET_NIGHT, USERNAME, ROOM, ADD_PLAYER, SET_SOCKET } from './actionTypes';
+import { UPDATE_NIGHT, ADD_NIGHT, GET_NIGHT, USERNAME, ROOM, ADD_PLAYER, REMOVE_PLAYER } from './actionTypes';
 
 // update the night counter
 export const addNight = (night) => {
@@ -44,6 +44,14 @@ export const setRoom = (room) => {
 export const addPlayer = (player) => {
   return {
     type: ADD_PLAYER,
+    payload: player  
+  };
+};
+
+// remove a player
+export const removePlayer = (player) => {
+  return {
+    type: REMOVE_PLAYER,
     payload: player  
   };
 };

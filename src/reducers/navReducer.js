@@ -25,6 +25,18 @@ export default (state = initialNavState, action) => {
                 state
             );
             break;
+        case 'Lobby':
+            nextState = AppNavigator.router.getStateForAction(
+                NavigationActions.navigate({ routeName: 'Lobby' }),
+                state
+            );
+            break;
+        case 'Home':
+            nextState = AppNavigator.router.getStateForAction(
+                NavigationActions.navigate({ routeName: 'Home' }),
+                state
+            );
+            break;
         default:
             nextState = AppNavigator.router.getStateForAction(action, state);
             break;

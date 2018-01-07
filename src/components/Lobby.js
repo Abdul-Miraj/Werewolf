@@ -24,7 +24,7 @@ class Lobby extends Component {
         const { socket } = this.state;
         socket.on('player-joined-lobby', res => {
             this.props.addPlayer({ id: 22, name: res.player_name, role: '' });
-            socket.emit('update-lobby', {player_name: this.props.username, sender_socket_id: res.sender_socket_id});
+            socket.emit('update-lobby', { player_name: this.props.username, sender_socket_id: res.sender_socket_id });
         });
         socket.on('update-lobby', res => {
             this.props.addPlayer({ id: 24, name: res, role: '' });
@@ -41,9 +41,12 @@ class Lobby extends Component {
                 <PlayerSelection players={this.props.players} role={null} />
                 <ButtonSet
                     btnTextOne="Start Game"
-                    btnPressOne={() => this.props.dispatch({ type: 'Roles' })}
+                    btnPressOne={() => this.props.navigation.dispatch({ type: 'Roles' })}
                     btnTextTwo="Leave Game"
-                    btnPressTwo={() => this.props.navigation.dispatch(NavigationActions.back())}
+                    btnPressTwo={() => {
+                        this.state.socket.on('disconnect', {});
+                        this.props.navigation.dispatch({ type: 'Back' })
+                    }}
                 />
             </View>
         );
@@ -73,7 +76,6 @@ const mapStateToProps = state => {
         players: state.players,
     };
 };
-
 
 // Hide the navigation
 Lobby.navigationOptions = {

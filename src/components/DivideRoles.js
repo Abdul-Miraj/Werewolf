@@ -21,7 +21,7 @@ class DivideRoles extends Component {
     // convert arrary of objects into array of names
     assignRole = () => {
         let players = this.props.players;
-
+        console.log(players);
         // shuffle the players
         shuffle(players);
         // assign the roles and update the array
