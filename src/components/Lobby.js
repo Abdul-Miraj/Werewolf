@@ -32,10 +32,8 @@ class Lobby extends Component {
             this.props.addPlayer({ id: res.sender_socket_id, name: res.player_name, role: '', isDead: false, isHost: false});
         });
         socket.on('new-event-single', res => {
-            console.log("0");
             if(res.action == "HOST-TRANSFER") {
                 this.props.players[this.state.playerIndex].isHost = true;
-                console.log("1");
             }
         });
     }
@@ -49,15 +47,15 @@ class Lobby extends Component {
 
     leaveGame = () => {
         this.props.setRoom(null);
+        this.props.removePlayer(this.state.playerIndex);
         if (this.props.players[this.state.playerIndex].isHost) {
-            if(this.props.players.length > 1) {
-                let sid = this.props.players[(this.state.playerIndex + 1)%this.props.players.length -1].id;
-                console.log(sid);
+            if(this.props.players.length > 0) {
+                let sid = this.props.players[1].id;
+                console.log("ID  ", sid);
                 this.state.socket.emit('send-event-single', {action: "HOST-TRANSFER", data: {}, socket_id: sid});
             }
         }
         this.state.socket.emit('disconnect', {});
-        this.props.removePlayer(this.state.playerIndex);
         console.log(this.props.players);
         this.props.navigation.dispatch({ type: 'Back' });
     }
