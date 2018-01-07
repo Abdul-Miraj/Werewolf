@@ -9,7 +9,7 @@ export default (state = [], action) => {
         case ADD_PLAYER:
             return [...state, action.payload];
         case REMOVE_PLAYER:
-            return [...state, action.payload];
+            return []//state.splice(action.payload, 1);
         default:
             return state;
     }

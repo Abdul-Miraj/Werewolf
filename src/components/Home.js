@@ -29,7 +29,6 @@ class Home extends Component {
             "role": "",
             "isDead": false
         };
-        console.log(player);
         this.props.addPlayer(player);
         this.props.navigation.navigate(
             'Lobby',
@@ -71,7 +70,7 @@ class Home extends Component {
                 // user is creating a room 
                 socket.emit('create-room', null);
                 // set the room code, and add the new player to the state once room is created
-                socket.on('roomCreated', (rk) => {
+                socket.on('room-created', (rk) => {
                     this.setState({isHost: true});
                     this.callLobby(rk.room_id, socket, name);
                 });

@@ -17,7 +17,8 @@ class Lobby extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            socket: this.props.navigation.state.params.socket
+            socket: props.navigation.state.params.socket,
+            playerIndex : props.players.findIndex(x => x.name == props.username),
         };
     }
 
@@ -33,9 +34,15 @@ class Lobby extends Component {
     }
 
     isHost = () => {
+        return !(this.props.players[this.state.playerIndex].isHost);
+    }
+
+    leaveGame = () => {
+        this.props.setRoom(null);
+        this.props.removePlayer(this.state.playerIndex);
         console.log(this.props.players);
-        let playerIndex = this.props.players.findIndex(x => x.name == this.props.username);
-        return !(this.props.players[playerIndex].isHost);
+        this.state.socket.emit('disconnect', {});
+        this.props.navigation.dispatch({ type: 'Back' });
     }
 
     render() {
@@ -51,10 +58,7 @@ class Lobby extends Component {
                     btnPressOne={() => this.props.navigation.dispatch({ type: 'Roles' })}
                     isDisabled={this.isHost()}
                     btnTextTwo="Leave Game"
-                    btnPressTwo={() => {
-                        this.state.socket.emit('disconnect', {});
-                        this.props.navigation.dispatch({ type: 'Back' })
-                    }}
+                    btnPressTwo={() => this.leaveGame()}
                 />
             </View>
         );
@@ -82,6 +86,7 @@ const mapStateToProps = state => {
         username: state.username,
         room: state.room,
         players: state.players,
+        room: state.room,
     };
 };
 
