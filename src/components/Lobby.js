@@ -31,6 +31,11 @@ class Lobby extends Component {
         socket.on('update-lobby', res => {
             this.props.addPlayer({ id: res.sender_socket_id, name: res.player_name, role: '' });
         });
+        socket.on('new-event-single', res => {
+            if(res.action == "HOST-TRANSFER") {
+                this.props.players[this.state.playerIndex].isHost = true;
+            }
+        });
     }
 
     isHost = () => {
@@ -42,6 +47,12 @@ class Lobby extends Component {
 
     leaveGame = () => {
         this.props.setRoom(null);
+        if (this.props.players[this.state.playerIndex].isHost) {
+            if(this.props.players.length > 1) {
+                let sid = this.props.players[(this.state.playerIndex + 1)%this.props.players.length -1].id;
+                this.state.socket.emit('send-event-single', {action: "HOST-TRANSFER", data: {}, socket_id: sid});
+            }
+        }
         this.state.socket.emit('disconnect', {});
         this.props.removePlayer(this.state.playerIndex);
         this.props.navigation.dispatch({ type: 'Back' });
