@@ -49,9 +49,9 @@ export const addPlayer = (player) => {
 };
 
 // remove a player
-export const removePlayer = (player) => {
+export const removePlayer = (index) => {
   return {
     type: REMOVE_PLAYER,
-    payload: player  
+    payload: index  
   };
 };

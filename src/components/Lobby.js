@@ -18,30 +18,32 @@ class Lobby extends Component {
         super(props);
         this.state = {
             socket: props.navigation.state.params.socket,
-            playerIndex : props.players.findIndex(x => x.name == props.username),
+            playerIndex: props.players.findIndex(x => x.name == props.username),
         };
     }
 
     componentDidMount() {
         const { socket } = this.state;
         socket.on('player-joined-lobby', res => {
-            this.props.addPlayer({ id: 22, name: res.player_name, role: '' });
+            this.props.addPlayer({ id: res.sender_socket_id, name: res.player_name, role: '' });
             socket.emit('update-lobby', { player_name: this.props.username, sender_socket_id: res.sender_socket_id });
         });
         socket.on('update-lobby', res => {
-            this.props.addPlayer({ id: 24, name: res, role: '' });
+            this.props.addPlayer({ id: res.sender_socket_id, name: res.player_name, role: '' });
         });
     }
 
     isHost = () => {
-        return !(this.props.players[this.state.playerIndex].isHost);
+        if (this.props.players[this.state.playerIndex] !== undefined) {
+            return !(this.props.players[this.state.playerIndex].isHost);
+        }
+        return true;
     }
 
     leaveGame = () => {
         this.props.setRoom(null);
-        this.props.removePlayer(this.state.playerIndex);
-        console.log(this.props.players);
         this.state.socket.emit('disconnect', {});
+        this.props.removePlayer(this.state.playerIndex);
         this.props.navigation.dispatch({ type: 'Back' });
     }
 
@@ -54,9 +56,9 @@ class Lobby extends Component {
                 </View>
                 <PlayerSelection players={this.props.players} role={null} />
                 <ButtonSet
+                    isDisabled={this.isHost()}
                     btnTextOne="Start Game"
                     btnPressOne={() => this.props.navigation.dispatch({ type: 'Roles' })}
-                    isDisabled={this.isHost()}
                     btnTextTwo="Leave Game"
                     btnPressTwo={() => this.leaveGame()}
                 />
