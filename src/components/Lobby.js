@@ -26,14 +26,16 @@ class Lobby extends Component {
         const { socket } = this.state;
         socket.on('player-joined-lobby', res => {
             this.props.addPlayer({ id: res.sender_socket_id, name: res.player_name, role: '' });
-            socket.emit('update-lobby', { player_name: this.props.username, sender_socket_id: res.sender_socket_id });
+            socket.emit('update-lobby', { player_name: this.props.username, sender_socket_id: res.sender_socket_id, isDead: false, isHost: false });
         });
         socket.on('update-lobby', res => {
-            this.props.addPlayer({ id: res.sender_socket_id, name: res.player_name, role: '' });
+            this.props.addPlayer({ id: res.sender_socket_id, name: res.player_name, role: '', isDead: false, isHost: false});
         });
         socket.on('new-event-single', res => {
+            console.log("0");
             if(res.action == "HOST-TRANSFER") {
                 this.props.players[this.state.playerIndex].isHost = true;
+                console.log("1");
             }
         });
     }
@@ -50,11 +52,13 @@ class Lobby extends Component {
         if (this.props.players[this.state.playerIndex].isHost) {
             if(this.props.players.length > 1) {
                 let sid = this.props.players[(this.state.playerIndex + 1)%this.props.players.length -1].id;
+                console.log(sid);
                 this.state.socket.emit('send-event-single', {action: "HOST-TRANSFER", data: {}, socket_id: sid});
             }
         }
         this.state.socket.emit('disconnect', {});
         this.props.removePlayer(this.state.playerIndex);
+        console.log(this.props.players);
         this.props.navigation.dispatch({ type: 'Back' });
     }
 
