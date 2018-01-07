@@ -25,8 +25,8 @@ class Lobby extends Component {
     componentDidMount() {
         const { socket } = this.state;
         socket.on('player-joined-lobby', res => {
-            this.props.addPlayer({ id: res.sender_socket_id, name: res.player_name, role: '' });
-            socket.emit('update-lobby', { player_name: this.props.username, sender_socket_id: res.sender_socket_id, isDead: false, isHost: false });
+            this.props.addPlayer({ id: res.sender_socket_id, name: res.player_name, role: '', isDead: false, isHost: false });
+            socket.emit('update-lobby', { player_name: this.props.username, sender_socket_id: res.sender_socket_id});
         });
         socket.on('update-lobby', res => {
             this.props.addPlayer({ id: res.sender_socket_id, name: res.player_name, role: '', isDead: false, isHost: false});
