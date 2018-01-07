@@ -9,7 +9,8 @@ import { NavigationActions } from 'react-navigation';
 import PlayerSelection from './PlayerSelection';
 import ButtonSet from './common/ButtonSet';
 import * as actions from '../actions';
-import io from 'socket.io-client'
+import io from 'socket.io-client';
+import _ from 'lodash';
 
 // Component thats displays a list of players in lobby
 class Lobby extends Component {
@@ -31,6 +32,12 @@ class Lobby extends Component {
         });
     }
 
+    isHost = () => {
+        console.log(this.props.players);
+        let playerIndex = this.props.players.findIndex(x => x.name == this.props.username);
+        return !(this.props.players[playerIndex].isHost);
+    }
+
     render() {
         return (
             <View style={styles.container} >
@@ -42,6 +49,7 @@ class Lobby extends Component {
                 <ButtonSet
                     btnTextOne="Start Game"
                     btnPressOne={() => this.props.navigation.dispatch({ type: 'Roles' })}
+                    isDisabled={this.isHost()}
                     btnTextTwo="Leave Game"
                     btnPressTwo={() => {
                         this.state.socket.emit('disconnect', {});

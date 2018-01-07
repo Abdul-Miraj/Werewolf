@@ -14,6 +14,8 @@ class Home extends Component {
         this.state = {
             render: 0,
             error: '',
+            isHost: false,
+            sid: '',
         };
     }
 
@@ -21,12 +23,13 @@ class Home extends Component {
     callLobby = (roomCode, socket, name) => {
         this.props.setRoom(roomCode);
         const player = {
-            "id": 3,
+            "id": this.state.sid,
             "name": name,
-            "isHost": false,
+            "isHost": this.state.isHost,
             "role": "",
             "isDead": false
         };
+        console.log(player);
         this.props.addPlayer(player);
         this.props.navigation.navigate(
             'Lobby',
@@ -43,6 +46,11 @@ class Home extends Component {
 
             // connection to server is intialized
             const socket = io('https://werewolf-server-1.herokuapp.com/');
+            socket.on('connect', () => {
+                // update the socket id in state
+                // To get socket.id of current client use : socket.socket.sessionid;
+                this.setState({ sid: socket.io.engine.id });
+            });
 
             //{room ? null : null}
             this.setState({ error: '' });
@@ -57,12 +65,14 @@ class Home extends Component {
                 };
                 socket.emit('join-room', data);
                 // make into a function
+                this.setState({isHost: false});
                 this.callLobby(values['Room Code'], socket, name);
             } else {
                 // user is creating a room 
                 socket.emit('create-room', null);
                 // set the room code, and add the new player to the state once room is created
                 socket.on('roomCreated', (rk) => {
+                    this.setState({isHost: true});
                     this.callLobby(rk.room_id, socket, name);
                 });
             }

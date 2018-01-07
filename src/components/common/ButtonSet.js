@@ -8,7 +8,7 @@ import Btn from './Button';
 const WakePlayer = (props) => {
     return (
         <View style={styles.btnContainer}>
-            <Btn text={props.btnTextOne} onPress={props.btnPressOne} />
+            <Btn text={props.btnTextOne} onPress={props.btnPressOne} isDisabled={props.isDisabled} />
             <Btn text={props.btnTextTwo} onPress={props.btnPressTwo} />
         </View>
 
