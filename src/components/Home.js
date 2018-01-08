@@ -22,16 +22,7 @@ class Home extends Component {
     // function to go to next screen and set the player name/room code
     callLobby = (roomCode, socket, name) => {
         // update the redux state with name and room code
-        this.props.setUser(this.state.sid);
         this.props.setRoom(roomCode);
-        const player = {
-            "id": this.state.sid,
-            "name": name,
-            "isHost": this.state.isHost,
-            "role": "",
-            "isDead": false
-        };
-        this.props.addPlayer(player);
         this.props.navigation.navigate(
             'Lobby',
             { socket },
@@ -49,7 +40,15 @@ class Home extends Component {
             socket.on('connect', () => {
                 // update the socket id in state
                 // To get socket.id of current client use : socket.socket.sessionid;
-                this.setState({ sid: socket.io.engine.id });
+                this.props.setUser(socket.io.engine.id);
+                const player = {
+                    "id": socket.io.engine.id,
+                    "name": name,
+                    "isHost": this.state.isHost,
+                    "role": "",
+                    "isDead": false
+                };
+                this.props.addPlayer(player);
             });
             // error message handling
             this.setState({ error: '' });

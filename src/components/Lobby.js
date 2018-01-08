@@ -26,24 +26,31 @@ class Lobby extends Component {
     componentDidMount() {
         const { socket, playerIndex } = this.state;
         socket.on('player-joined-lobby', res => {
-            this.props.addPlayer({ id: res.sender_socket_id, name: res.player_name, role: '', isDead: false, isHost: false });
+            this.props.addPlayer({ id: res.socket_id, name: res.player_name, role: '', isDead: false, isHost: false });
             let name = "";
             if (this.props.players[playerIndex] !== undefined) {
                 name = this.props.players[playerIndex].name;
             }
-            socket.emit('update-lobby', { player_name: name, sender_socket_id: res.sender_socket_id });
+            socket.emit('update-lobby', { player_name: name, socket_id: res.socket_id });
         });
+
         socket.on('update-lobby', res => {
-            this.props.addPlayer({ id: res.sender_socket_id, name: res.player_name, role: '', isDead: false, isHost: false });
+            this.props.addPlayer({ id: res.socket_id, name: res.player_name, role: '', isDead: false, isHost: false });
         });
-        console.log(this.props.players);
-        /*
+
         socket.on('new-event-single', res => {
-            if(res.action == "HOST-TRANSFER") {
+            if (res.action == "HOST-TRANSFER") {
                 this.props.players[this.state.playerIndex].isHost = true;
-                console.log(this.props.players[this.state.playerIndex]);
+                //console.log(this.props.players[this.state.playerIndex]);
             }
-        });*/
+        });
+
+        socket.on('new-event-all', res => {
+            if ('PLAYER-HAS-LEFT-ROOM' == res.action) {
+                // delete player from state object
+                this.props.removePlayer(this.props.players.findIndex(x => x.id == res.data.id));
+            }
+        });
     }
 
     // check to see if you are host 
@@ -56,20 +63,33 @@ class Lobby extends Component {
 
     // disconnect and update state when you leave game
     leaveGame = () => {
+        // notify all other sockets that this socket is leaving the room.
+        const options = {
+            action: "PLAYER-HAS-LEFT-ROOM",
+            room_id: this.props.room,
+            data: { id: this.props.id }
+        }
+
+        this.state.socket.emit('send-event-all', options)
+
+        //console.log("PLAYER STATE BEFORE LEAVING: ", this.props.players);
         this.props.setRoom(null);
+
+        // ASYNC FUNCTION!
         this.props.removePlayer(this.state.playerIndex);
-        // transfer host if current one leaves
+
         /*
+        // transfer host if current one leaves
         if (this.props.players[this.state.playerIndex].isHost) {
             if(this.props.players.length > 0) {
-                let sid = this.props.players[1].id;
-                console.log("ID  ", sid);
-                this.state.socket.emit('send-event-single', {action: "HOST-TRANSFER", data: {}, socket_id: sid});
+                //let sid = this.props.players[1].id;
+                //console.log("CURRENT PLAYERS ID: ", sid);
+                //this.state.socket.emit('send-event-single', {action: "HOST-TRANSFER", data: {}, socket_id: sid});
             }
-        }*/
+        }
+        */
         this.state.socket.emit('disconnect', {});
         this.props.navigation.dispatch({ type: 'Back' });
-        console.log(this.props.players);
     }
 
     render() {
