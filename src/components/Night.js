@@ -6,22 +6,33 @@ import CountdownCircle from 'react-native-countdown-circle';
 import PlayerSelection from './PlayerSelection';
 import shuffle from 'shuffle-array';
 import WakePlayer from './WakePlayer';
+import roles from '../reducers/RoleList.json';
 
-// Home screen that imports all components
+/**
+ *  Night, component to wake players
+ */
 class Night extends Component {
     constructor(props) {
         super(props);
         this.state = {
             night: 1,
             isWoke: true, // default false
-            serverRole: 'Werewolf',
+            awakeRole: 'Werewolf',
             id: props.id
         };
     }
 
+    /**
+     *  {
+     *      Night: 1
+     *      Seer: ''
+     *      Bodyguard: ''
+     *      Werewolf: ''
+     *  }
+     */
+
     // create the new info object and pass to server each time 
     componentDidMount() {
-        console.log(this.props);
         shuffle(this.props.players);
         const night = {
             Night: this.state.night
@@ -31,6 +42,7 @@ class Night extends Component {
                 night[player.role] = '';
             }
         });
+        console.log(this.props);
         this.props.addNight(night);
     }
 
@@ -44,7 +56,7 @@ class Night extends Component {
                     radius={0}
                     onTimeElapsed={() => this.setState({
                         isWoke: !this.state.isWoke,
-                        serverRole: 'Bodyguard'
+                        awakeRole: 'Bodyguard'
                     })} // update the state of the players woken up
                 />
             </View>
@@ -53,8 +65,8 @@ class Night extends Component {
 
     renderWake = () => {
         return (
-            <WakePlayer night={this.props.night[this.state.serverRole]} role={this.state.serverRole}>
-                <PlayerSelection players={this.props.players} role={this.state.serverRole} />
+            <WakePlayer night={this.props.night[this.state.awakeRole]} role={this.state.awakeRole}>
+                <PlayerSelection players={this.props.players} role={this.state.awakeRole} />
             </WakePlayer>
         );
     };
@@ -63,7 +75,13 @@ class Night extends Component {
         // if myrole is same as server then display selection
         let players = this.props.players;
         let playerIndex = players.findIndex(x => x.id == this.state.id);
-        return true;//players[playerIndex].role == this.state.serverRole;
+
+        // loop through players see if  
+        players.map(player => {
+            console.log(player.role);
+        });
+
+        return true;//players[playerIndex].role == this.state.awakeRole;
     };
 
     render() {
