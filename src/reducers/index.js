@@ -11,6 +11,6 @@ export default combineReducers({
     players: playerReducer,
     night: nightReducer,
     form: formReducer,
-    username: userReducer,
+    id: userReducer,
     room: roomReducer,
 });

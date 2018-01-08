@@ -7,7 +7,7 @@ import {
 import CountdownCircle from 'react-native-countdown-circle';
 import roles from '../reducers/RoleList.json';
 
-// Component thats decide which players can be voted for
+// Component displays description timer and decision
 const WakePlayer = (props) => {
     const { header, highlight, timer, night, selection } = styles;
     let roleIndex = roles.findIndex(x => x.role == props.role);

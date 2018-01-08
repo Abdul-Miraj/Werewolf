@@ -18,26 +18,35 @@ class Lobby extends Component {
         super(props);
         this.state = {
             socket: props.navigation.state.params.socket,
-            playerIndex: props.players.findIndex(x => x.name == props.username),
+            playerIndex: props.players.findIndex(x => x.id == props.id),
         };
     }
 
+    // update the state for all players 
     componentDidMount() {
-        const { socket } = this.state;
+        const { socket, playerIndex } = this.state;
         socket.on('player-joined-lobby', res => {
             this.props.addPlayer({ id: res.sender_socket_id, name: res.player_name, role: '', isDead: false, isHost: false });
-            socket.emit('update-lobby', { player_name: this.props.username, sender_socket_id: res.sender_socket_id});
+            let name = "";
+            if (this.props.players[playerIndex] !== undefined) {
+                name = this.props.players[playerIndex].name;
+            }
+            socket.emit('update-lobby', { player_name: name, sender_socket_id: res.sender_socket_id });
         });
         socket.on('update-lobby', res => {
-            this.props.addPlayer({ id: res.sender_socket_id, name: res.player_name, role: '', isDead: false, isHost: false});
+            this.props.addPlayer({ id: res.sender_socket_id, name: res.player_name, role: '', isDead: false, isHost: false });
         });
+        console.log(this.props.players);
+        /*
         socket.on('new-event-single', res => {
             if(res.action == "HOST-TRANSFER") {
                 this.props.players[this.state.playerIndex].isHost = true;
+                console.log(this.props.players[this.state.playerIndex]);
             }
-        });
+        });*/
     }
 
+    // check to see if you are host 
     isHost = () => {
         if (this.props.players[this.state.playerIndex] !== undefined) {
             return !(this.props.players[this.state.playerIndex].isHost);
@@ -45,19 +54,22 @@ class Lobby extends Component {
         return true;
     }
 
+    // disconnect and update state when you leave game
     leaveGame = () => {
         this.props.setRoom(null);
         this.props.removePlayer(this.state.playerIndex);
+        // transfer host if current one leaves
+        /*
         if (this.props.players[this.state.playerIndex].isHost) {
             if(this.props.players.length > 0) {
                 let sid = this.props.players[1].id;
                 console.log("ID  ", sid);
                 this.state.socket.emit('send-event-single', {action: "HOST-TRANSFER", data: {}, socket_id: sid});
             }
-        }
+        }*/
         this.state.socket.emit('disconnect', {});
-        console.log(this.props.players);
         this.props.navigation.dispatch({ type: 'Back' });
+        console.log(this.props.players);
     }
 
     render() {
@@ -98,7 +110,7 @@ const styles = {
 
 const mapStateToProps = state => {
     return {
-        username: state.username,
+        id: state.id,
         room: state.room,
         players: state.players,
         room: state.room,

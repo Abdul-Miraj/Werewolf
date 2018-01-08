@@ -13,7 +13,7 @@ class DivideRoles extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: props.username,
+            id: props.id,
             room: props.room,
         };
     }
@@ -29,11 +29,16 @@ class DivideRoles extends Component {
         }
         // modify the player state
 
-        // get the index of my username
-        let playerIndex = players.findIndex(x => x.name == this.state.username);
+        // get the index of my id
+        let playerIndex = players.findIndex(x => x.id == this.state.id);
         // get the index of my role and return that object
         let roleIndex = roles.findIndex(x => x.role == players[playerIndex].role);
         return roles[roleIndex];
+    };
+
+    getName = () => {
+        let playerIndex = this.props.players.findIndex(x => x.id == this.state.id);
+        return this.props.players[playerIndex].name;
     };
 
     render() {
@@ -45,12 +50,12 @@ class DivideRoles extends Component {
                             {this.state.room}
                         </Text>
                         <Text style={styles.name}>
-                            {this.state.username}
+                            {this.getName()}
                         </Text>
                     </View>
                     <View style={styles.timer}>
                         <CountdownCircle
-                            seconds={4}
+                            seconds={10}
                             radius={25}
                             borderWidth={4}
                             color="#4fd09a"
@@ -109,7 +114,7 @@ DivideRoles.navigationOptions = {
 const mapStateToProps = state => {
     return {
         players: state.players,
-        username: state.username,
+        id: state.id,
         room: state.room
     };
 };

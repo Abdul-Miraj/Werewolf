@@ -21,6 +21,8 @@ class Home extends Component {
 
     // function to go to next screen and set the player name/room code
     callLobby = (roomCode, socket, name) => {
+        // update the redux state with name and room code
+        this.props.setUser(this.state.sid);
         this.props.setRoom(roomCode);
         const player = {
             "id": this.state.sid,
@@ -42,7 +44,6 @@ class Home extends Component {
         if ((name == null) || (name.length < 2)) {
             this.setState({ error: 'Name Field Invalid' });
         } else {
-
             // connection to server is intialized
             const socket = io('https://werewolf-server-1.herokuapp.com/');
             socket.on('connect', () => {
@@ -50,12 +51,8 @@ class Home extends Component {
                 // To get socket.id of current client use : socket.socket.sessionid;
                 this.setState({ sid: socket.io.engine.id });
             });
-
-            //{room ? null : null}
+            // error message handling
             this.setState({ error: '' });
-            // update the redux state with name and room code
-            this.props.setUser(name);
-
             // user is attempting to join a room
             if (values['Room Code'] != null) {
                 const data = {
@@ -63,15 +60,13 @@ class Home extends Component {
                     player_name: name
                 };
                 socket.emit('join-room', data);
-                // make into a function
-                this.setState({isHost: false});
                 this.callLobby(values['Room Code'], socket, name);
             } else {
                 // user is creating a room 
                 socket.emit('create-room', null);
                 // set the room code, and add the new player to the state once room is created
                 socket.on('room-created', (rk) => {
-                    this.setState({isHost: true});
+                    this.setState({ isHost: true });
                     this.callLobby(rk.room_id, socket, name);
                 });
             }
@@ -136,9 +131,9 @@ class Home extends Component {
         return (
             <ButtonSet
                 btnTextOne="New Game"
-                btnPressOne={() => this.setState({ render: 1 })}
+                btnPressOne={() => this.setState({ isHost: true, render: 1 })}
                 btnTextTwo="Join Game"
-                btnPressTwo={() => this.setState({ render: 2 })}
+                btnPressTwo={() => this.setState({ isHost: false, render: 2 })}
             />
         );
     };

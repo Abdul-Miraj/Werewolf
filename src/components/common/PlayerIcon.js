@@ -7,6 +7,10 @@ import {
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
+/**
+ * Component that creates icons for each player.
+ * Users are able to select the icons/tiles
+ */
 class PlayerIcon extends Component {
     constructor(props) {
         super(props);
@@ -14,27 +18,17 @@ class PlayerIcon extends Component {
             myRole: props.myRole,
             player: props.player,
             isSelected: false,
-            container: {
-                backgroundColor: '#869c85',
-                height: 100,
-                width: 100,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderWidth: 3,
-                borderColor: '#fff',
-                margin: 5
-            },
         };
     }
-
 
     // Return true if you want to select yourself
     showTeam = () => {
         let show = true;
-        // Bodygurad is able to select themselves
-        if (this.state.myRole == 'Bodyguard') {
+        // Roles that are able to select themselves
+        if ((this.state.myRole == 'Bodyguard') || (this.state.myRole == 'Werewolf')) {
             return show;
         }
+        // hide the player if the current role is myself
         if (this.state.myRole == this.state.player.role) {
             show = false;
         }
@@ -52,35 +46,43 @@ class PlayerIcon extends Component {
             }
         } else if (this.state.myRole == 'Werewolf') {
             // ww: { selections: [], kill: "" }
+            console.log(this.props.night);
+            return this.state.player.name;
         } else {
             // return players name otherwise
+            // { role: selection } format
             return this.state.player.name;
         }
     };
 
     // function that allows one selection
     allowSelect = () => {
-        this.setState({ container: styles.container });
+        this.setState({ isSelected: true });
         this.props.updateNight({ role: this.state.myRole, value: this.storeChoice() });
     };
 
+    showCard = () => {
+        return (
+            <TouchableOpacity onPress={() => {
+                // role is null in the lobby screen
+                if (this.props.myRole != null) {
+                    { this.props.night[this.state.myRole] == null ? this.allowSelect() : null }
+                }
+            }}>
+                <View style={this.state.isSelected ? styles.selectedContainer : styles.container}>
+                    <Text style={styles.name}>
+                        {this.props.player.name}
+                    </Text>
+                </View>
+            </TouchableOpacity>
+        );
+    }
+
     // Component to create icon card
     render() {
-        const { name } = this.state.player;
         return (
             <View>
-                <TouchableOpacity onPress={() => {
-                    // role is null in the lobby screen
-                    if (this.props.myRole != null) {
-                        { this.props.night[this.state.myRole] == null ? this.allowSelect() : null }
-                    }
-                }}>
-                    <View style={this.showTeam() ? this.state.container : styles.hide}>
-                        <Text style={styles.name}>
-                            {name}
-                        </Text>
-                    </View>
-                </TouchableOpacity>
+                {this.showTeam() ? this.showCard() : null }
             </View>
         );
     }
@@ -95,6 +97,16 @@ const styles = {
         textAlign: 'center'
     },
     container: {
+        backgroundColor: '#869c85',
+        height: 100,
+        width: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 3,
+        borderColor: '#fff',
+        margin: 5
+    },
+    selectedContainer: {
         backgroundColor: '#869c85',
         height: 100,
         width: 100,

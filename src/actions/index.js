@@ -1,4 +1,4 @@
-import { UPDATE_NIGHT, ADD_NIGHT, GET_NIGHT, USERNAME, ROOM, ADD_PLAYER, REMOVE_PLAYER } from './actionTypes';
+import { UPDATE_NIGHT, ADD_NIGHT, GET_NIGHT, ID, ROOM, ADD_PLAYER, REMOVE_PLAYER } from './actionTypes';
 
 // update the night counter
 export const addNight = (night) => {
@@ -24,10 +24,10 @@ export const getNight = (night) => {
   };
 };
 
-// set the username
+// set the id
 export const setUser = (name) => {
   return {
-    type: USERNAME,
+    type: ID,
     payload: name  
   };
 };
