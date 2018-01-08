@@ -7,3 +7,4 @@ export const ID = 'ID';
 export const ROOM = 'ROOM';
 export const ADD_PLAYER = 'ADD_PLAYER';
 export const REMOVE_PLAYER = 'REMOVE_PLAYER';
+export const RESET_STATE = 'RESET_STATE';
