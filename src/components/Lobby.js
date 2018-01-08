@@ -78,16 +78,14 @@ class Lobby extends Component {
         this.props.resetState();
         
 
-        /*
         // transfer host if current one leaves
         if (this.props.players[this.state.playerIndex].isHost) {
-            if(this.props.players.length > 0) {
-                //let sid = this.props.players[1].id;
-                //console.log("CURRENT PLAYERS ID: ", sid);
+            if(this.props.players.length > 1) {
+                let sid = this.props.players[(this.state.playerIndex+1)%this.props.players.length];
+                console.log("CURRENT PLAYERS ID: ", sid);
                 //this.state.socket.emit('send-event-single', {action: "HOST-TRANSFER", data: {}, socket_id: sid});
             }
         }
-        */
         this.state.socket.disconnect();
         this.props.navigation.dispatch({ type: 'Back' });
     }
