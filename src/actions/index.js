@@ -1,26 +1,26 @@
-import { UPDATE_NIGHT, ADD_NIGHT, GET_NIGHT, ID, ROOM, ADD_PLAYER, REMOVE_PLAYER, RESET_STATE } from './actionTypes';
+import { UPDATE_NIGHT, ADD_NIGHT, GET_NIGHT, ID, ROOM, ADD_PLAYER, REMOVE_PLAYER, RESET_STATE, ASSIGN_ROLES } from './actionTypes';
 
 // update the night counter
 export const addNight = (night) => {
-    return {
-      type: ADD_NIGHT,
-      payload: night  
-    };
+  return {
+    type: ADD_NIGHT,
+    payload: night
+  };
 };
 
 // update the object that stores night decisions
 export const updateNight = (night) => {
-    return {
-      type: UPDATE_NIGHT,
-      payload: night  
-    };
+  return {
+    type: UPDATE_NIGHT,
+    payload: night
+  };
 };
 
 //
 export const getNight = (night) => {
   return {
     type: GET_NIGHT,
-    payload: night  
+    payload: night
   };
 };
 
@@ -28,7 +28,7 @@ export const getNight = (night) => {
 export const setUser = (name) => {
   return {
     type: ID,
-    payload: name  
+    payload: name
   };
 };
 
@@ -36,7 +36,7 @@ export const setUser = (name) => {
 export const setRoom = (room) => {
   return {
     type: ROOM,
-    payload: room  
+    payload: room
   };
 };
 
@@ -44,7 +44,7 @@ export const setRoom = (room) => {
 export const addPlayer = (player) => {
   return {
     type: ADD_PLAYER,
-    payload: player  
+    payload: player
   };
 };
 
@@ -52,12 +52,20 @@ export const addPlayer = (player) => {
 export const removePlayer = (index) => {
   return {
     type: REMOVE_PLAYER,
-    payload: index  
+    payload: index
   };
 };
 
 export const resetState = () => {
   return {
-    type: RESET_STATE,
-  };
+    type: RESET_STATE
+  }
 };
+
+export const assignRoles = (index) => {
+  return {
+    type: ASSIGN_ROLES,
+    payload: index
+  }
+};
+

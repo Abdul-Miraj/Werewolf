@@ -11,6 +11,8 @@ import ButtonSet from './common/ButtonSet';
 import * as actions from '../actions';
 import io from 'socket.io-client';
 import _ from 'lodash';
+import shuffle from 'shuffle-array';
+import roles from '../reducers/RoleList.json';
 
 // Component thats displays a list of players in lobby
 class Lobby extends Component {
@@ -38,9 +40,10 @@ class Lobby extends Component {
 
         socket.on('new-event-single', res => {
             if (res.action == "HOST-TRANSFER") {
-                console.log("HOST TRAMSFER", res);
+ 
                 let newIndex = this.props.players.findIndex(x => x.id == res.data.socket_id);
                 this.props.players[newIndex].isHost = true;
+
                 // update the button to true
                 if (res.data.socket_id === this.props.id) {
                     this.setState({ isHost: false });
@@ -57,6 +60,14 @@ class Lobby extends Component {
                 // delete player from state object
                 this.props.removePlayer(this.props.players.findIndex(x => x.id == res.data.id));
             }
+            
+            else if('STARTING-GAME' == res.action){
+                
+                // change state
+                this.props.assignRoles(res.data.roles);
+
+                this.props.navigation.dispatch({ type: 'Roles' })
+            }
         });
     }
 
@@ -69,6 +80,40 @@ class Lobby extends Component {
         }
     }
 
+    // convert arrary of objects into array of names
+    assignRole = () => {
+        let players = this.props.players;
+
+        // shuffle the players
+        shuffle(players);
+
+        // assign the roles and update the array
+        for (let i = 0; i < players.length; i++) {
+            players[i].role = roles[i].role;
+        }
+
+    };
+
+    startGame = () => {
+
+        // assign the roles to each player
+        this.assignRole();
+        const updatedState = this.props.players;
+
+        const options = {
+            action: "STARTING-GAME",
+            room_id: this.props.room,
+            data: { roles: updatedState }
+        };
+
+        // send the assigned roles to every client
+        this.state.socket.emit('send-event-all', options);
+
+        // go to the roles screen
+        this.props.navigation.dispatch({ type: 'Roles' });
+
+    };
+
     // disconnect and update state when you leave game
     leaveGame = () => {
         // notify all other sockets that this socket is leaving the room.
@@ -80,22 +125,20 @@ class Lobby extends Component {
 
         this.state.socket.emit('send-event-all', options)
 
-        console.log("PLAYER STATE BEFORE LEAVING: ", this.props.players);
-
         // transfer host if current one leaves
         if (this.props.players[this.state.playerIndex] != undefined) {
             if (this.props.players[this.state.playerIndex].isHost) {
                 if (this.props.players.length > 1) {
                     let sid = this.props.players[(this.state.playerIndex + 1) % this.props.players.length];
-                    console.log("CURRENT PLAYERS ID: ", sid);
                     let index = this.props.players.findIndex(x => x.id == sid.id);
-                    console.log("CURRENT PLAYERS INDEX: ", index);
+
                     this.state.socket.emit('send-event-single', {action: "HOST-TRANSFER", data: {socket_id: sid.id}, socket_id: sid.id});
                 }
             }
         }
         this.state.socket.disconnect();
         this.props.setRoom('');
+
         // ASYNC FUNCTION!
         this.props.resetState();
         this.props.navigation.dispatch({ type: 'Back' });
@@ -112,7 +155,7 @@ class Lobby extends Component {
                 <ButtonSet
                     isDisabled={this.state.isHost}
                     btnTextOne="Start Game"
-                    btnPressOne={() => this.props.navigation.dispatch({ type: 'Roles' })}
+                    btnPressOne={() => this.startGame()}
                     btnTextTwo="Leave Game"
                     btnPressTwo={() => this.leaveGame()}
                 />

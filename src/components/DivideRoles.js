@@ -18,24 +18,6 @@ class DivideRoles extends Component {
         };
     }
 
-    // convert arrary of objects into array of names
-    assignRole = () => {
-        let players = this.props.players;
-        // shuffle the players
-        shuffle(players);
-        // assign the roles and update the array
-        for (let i = 0; i < players.length; i++) {
-            players[i].role = roles[i].role;
-        }
-        // modify the player state
-
-        // get the index of my id
-        let playerIndex = players.findIndex(x => x.id == this.state.id);
-        // get the index of my role and return that object
-        let roleIndex = roles.findIndex(x => x.role == players[playerIndex].role);
-        return roles[roleIndex];
-    };
-
     getName = () => {
         let playerIndex = this.props.players.findIndex(x => x.id == this.state.id);
         return this.props.players[playerIndex].name;
@@ -67,7 +49,6 @@ class DivideRoles extends Component {
                 </View>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.scroll} >
                     <DivideCard name='My Role:'>
-                        <RoleCard roles={[this.assignRole()]} />
                     </DivideCard>
                     <DivideCard name='Roles:'>
                         <RoleCard roles={roles.slice(0, this.props.players.length)} />
