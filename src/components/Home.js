@@ -60,6 +60,7 @@ class Home extends Component {
                 };
                 socket.emit('join-room', data);
                 this.callLobby(values['Room Code'], socket, name);
+                values['Room Code'] = null;
             } else {
                 // user is creating a room 
                 socket.emit('create-room', null);
