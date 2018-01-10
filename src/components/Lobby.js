@@ -19,11 +19,13 @@ class Lobby extends Component {
         this.state = {
             socket: props.navigation.state.params.socket,
             playerIndex: props.players.findIndex(x => x.id == props.id),
+            isHost: true,
         };
     }
 
     // update the state for all players 
     componentDidMount() {
+        this.isHost();
         const { socket, playerIndex } = this.state;
         socket.on('player-joined-lobby', res => {
             this.props.addPlayer({ id: res.socket_id, name: res.player_name, role: '', isDead: false, isHost: false });
@@ -39,6 +41,10 @@ class Lobby extends Component {
                 console.log("HOST TRAMSFER", res);
                 let newIndex = this.props.players.findIndex(x => x.id == res.data.socket_id);
                 this.props.players[newIndex].isHost = true;
+                // update the button to true
+                if (res.data.socket_id === this.props.id) {
+                    this.setState({ isHost: false });
+                }
             }
 
             else if (res.action == "UPDATE-LOBBY") {
@@ -57,9 +63,10 @@ class Lobby extends Component {
     // check to see if you are host 
     isHost = () => {
         if (this.props.players[this.state.playerIndex] !== undefined) {
-            return !(this.props.players[this.state.playerIndex].isHost);
+             if (this.props.players[this.state.playerIndex].isHost) {
+                 this.setState({ isHost: false });
+             }
         }
-        return true;
     }
 
     // disconnect and update state when you leave game
@@ -83,7 +90,7 @@ class Lobby extends Component {
                     console.log("CURRENT PLAYERS ID: ", sid);
                     let index = this.props.players.findIndex(x => x.id == sid.id);
                     console.log("CURRENT PLAYERS INDEX: ", index);
-                    this.state.socket.emit('send-event-single', { action: "HOST-TRANSFER", data: { socket_id: sid.id } });
+                    this.state.socket.emit('send-event-single', {action: "HOST-TRANSFER", data: {socket_id: sid.id}, socket_id: sid.id});
                 }
             }
         }
@@ -103,7 +110,7 @@ class Lobby extends Component {
                 </View>
                 <PlayerSelection players={this.props.players} role={null} />
                 <ButtonSet
-                    isDisabled={this.isHost()}
+                    isDisabled={this.state.isHost}
                     btnTextOne="Start Game"
                     btnPressOne={() => this.props.navigation.dispatch({ type: 'Roles' })}
                     btnTextTwo="Leave Game"

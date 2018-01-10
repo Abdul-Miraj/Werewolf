@@ -9,7 +9,6 @@ export default (state = initalState, action) => {
         case GET_PLAYERS:
             return action.payload;
         case ADD_PLAYER:
-            console.log("ADDING A PLAYER: ", action.payload)
             return [...state, action.payload];
         case REMOVE_PLAYER:
             return state.slice(0,action.payload).concat(state.slice(action.payload + 1, state.length-1));
