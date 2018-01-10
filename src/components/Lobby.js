@@ -83,7 +83,7 @@ class Lobby extends Component {
                     console.log("CURRENT PLAYERS ID: ", sid);
                     let index = this.props.players.findIndex(x => x.id == sid.id);
                     console.log("CURRENT PLAYERS INDEX: ", index);
-                    this.state.socket.emit('send-event-single', {action: "HOST-TRANSFER", data: {}, socket_id: sid.id});
+                    this.state.socket.emit('send-event-single', { action: "HOST-TRANSFER", data: { socket_id: sid.id } });
                 }
             }
         }
