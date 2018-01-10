@@ -46,7 +46,6 @@ class PlayerIcon extends Component {
             }
         } else if (this.state.myRole == 'Werewolf') {
             // ww: { selections: [], kill: "" }
-            console.log(this.props.night);
             return this.state.player.name;
         } else {
             // return players name otherwise

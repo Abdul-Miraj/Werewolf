@@ -6,9 +6,9 @@ export default (state = [], action) => {
         case ADD_NIGHT:
             return [...state, action.payload];
         case UPDATE_NIGHT:
-            return Object.assign({}, state[state.length - 1], {
+            return [Object.assign({}, state[state.length - 1], {
                 [action.payload.role]: action.payload.value
-            })
+            })];
         default:
             return state;
     }

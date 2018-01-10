@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
 import * as actions from '../actions';
-import CountdownCircle from 'react-native-countdown-circle';
 import PlayerSelection from './PlayerSelection';
 import shuffle from 'shuffle-array';
 import WakePlayer from './WakePlayer';
@@ -16,29 +15,19 @@ class Night extends Component {
         super(props);
         this.state = {
             night: 1,
-            isWoke: true, // default false
             awakeRole: 'Werewolf',
-            id: props.id
+            id: props.id,
         };
     }
 
-    /**
-     *  {
-     *      Night: 1
-     *      Seer: ''
-     *      Bodyguard: ''
-     *      Werewolf: ''
-     *  }
-     */
-
     // create the new info object and pass to server each time 
-    componentDidMount() {
+    componentWillMount() {
         shuffle(this.props.players);
         const night = {
             Night: this.state.night
         };
         this.props.players.map(player => {
-            if (player.isDead == false) {
+            if ((player.isDead == false) && (player.role != 'Villager')) {
                 night[player.role] = '';
             }
         });
@@ -49,14 +38,6 @@ class Night extends Component {
         return (
             <View style={styles.night}>
                 <Text style={styles.Title}>Night {this.state.night}</Text>
-                <CountdownCircle // for testing only
-                    seconds={8}
-                    radius={0}
-                    onTimeElapsed={() => this.setState({
-                        isWoke: !this.state.isWoke,
-                        awakeRole: 'Bodyguard'
-                    })} // update the state of the players woken up
-                />
             </View>
         );
     };
@@ -73,14 +54,23 @@ class Night extends Component {
         // if myrole is same as server then display selection
         let players = this.props.players;
         let playerIndex = players.findIndex(x => x.id == this.state.id);
-
-        console.log("NIGHT",this.props.night);
-        // loop through roles and see if it is blank in night obj 
-        roles.map(role => {
-
-        });
-
-        return true;//players[playerIndex].role == this.state.awakeRole;
+        let wakeUp = '';
+        let nightObj = this.props.night[this.props.night.length -1];
+        console.log("Night: ", nightObj);
+        if (nightObj != undefined) {
+            // iterate though each role to see which hasnt woken up
+            for (let i = 0; i < roles.length; i++) {
+                if (nightObj[roles[i].role] == "") {
+                    wakeUp = roles[i].role;
+                    break;
+                }
+            }
+        }
+        if (wakeUp == '') {
+            // render day
+        }
+        // if role to wake up matches my role return true
+        return players[playerIndex].role == wakeUp;
     };
 
     render() {
