@@ -20,7 +20,7 @@ class Lobby extends Component {
         super(props);
         this.state = {
             socket: props.navigation.state.params.socket,
-            playerIndex: props.players.findIndex(x => x.id == props.id),
+            playerIndex: 0,//props.players.findIndex(x => x.id == props.id),
             isHost: true,
         };
     }
