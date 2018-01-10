@@ -42,12 +42,10 @@ class Night extends Component {
                 night[player.role] = '';
             }
         });
-        console.log(this.props);
         this.props.addNight(night);
     }
 
     renderNight = () => {
-        console.log(this.props);
         return (
             <View style={styles.night}>
                 <Text style={styles.Title}>Night {this.state.night}</Text>
@@ -76,9 +74,10 @@ class Night extends Component {
         let players = this.props.players;
         let playerIndex = players.findIndex(x => x.id == this.state.id);
 
-        // loop through players see if  
-        players.map(player => {
-            console.log(player.role);
+        console.log("NIGHT",this.props.night);
+        // loop through roles and see if it is blank in night obj 
+        roles.map(role => {
+
         });
 
         return true;//players[playerIndex].role == this.state.awakeRole;

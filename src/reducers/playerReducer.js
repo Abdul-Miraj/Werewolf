@@ -12,10 +12,8 @@ export default (state = initalState, action) => {
             console.log("ADDING A PLAYER: ", action.payload)
             return [...state, action.payload];
         case REMOVE_PLAYER:
-            console.log("REMOVING A PLAYER: ", state.slice(0,action.payload).concat(state.slice(action.payload + 1, state.length-1)));
             return state.slice(0,action.payload).concat(state.slice(action.payload + 1, state.length-1));
         case RESET_STATE:
-            console.log("good");
             return [];
         default:
             return state;

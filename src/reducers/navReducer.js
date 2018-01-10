@@ -31,6 +31,12 @@ export default (state = initialNavState, action) => {
                 state
             );
             break;
+        case 'Day':
+            nextState = AppNavigator.router.getStateForAction(
+                NavigationActions.navigate({ routeName: 'Day' }),
+                state
+            );
+            break;
         case 'Home':
             nextState = AppNavigator.router.getStateForAction(
                 NavigationActions.navigate({ routeName: 'Home' }),

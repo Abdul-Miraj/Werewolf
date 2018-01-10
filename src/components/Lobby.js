@@ -31,15 +31,17 @@ class Lobby extends Component {
             if (this.props.players[playerIndex] !== undefined) {
                 name = this.props.players[playerIndex].name;
             }
-            socket.emit('send-event-single', { action: "UPDATE-LOBBY", socket_id: res.socket_id , data: {socket_id: this.props.players[this.state.playerIndex].id, player_name: name}});
+            socket.emit('send-event-single', { action: "UPDATE-LOBBY", socket_id: res.socket_id, data: { socket_id: this.props.players[this.state.playerIndex].id, player_name: name } });
         });
 
         socket.on('new-event-single', res => {
             if (res.action == "HOST-TRANSFER") {
-                this.props.players[this.state.playerIndex].isHost = true;
+                console.log("HOST TRAMSFER", res);
+                let newIndex = this.props.players.findIndex(x => x.id == res.data.socket_id);
+                this.props.players[newIndex].isHost = true;
             }
 
-            else if(res.action == "UPDATE-LOBBY"){
+            else if (res.action == "UPDATE-LOBBY") {
                 this.props.addPlayer({ id: res.data.socket_id, name: res.data.player_name, role: '', isDead: false, isHost: false });
             }
         });
@@ -71,22 +73,24 @@ class Lobby extends Component {
 
         this.state.socket.emit('send-event-all', options)
 
-        //console.log("PLAYER STATE BEFORE LEAVING: ", this.props.players);
-        this.props.setRoom('');
-
-        // ASYNC FUNCTION!
-        this.props.resetState();
-        
+        console.log("PLAYER STATE BEFORE LEAVING: ", this.props.players);
 
         // transfer host if current one leaves
-        if (this.props.players[this.state.playerIndex].isHost) {
-            if(this.props.players.length > 1) {
-                let sid = this.props.players[(this.state.playerIndex+1)%this.props.players.length];
-                console.log("CURRENT PLAYERS ID: ", sid);
-                //this.state.socket.emit('send-event-single', {action: "HOST-TRANSFER", data: {}, socket_id: sid});
+        if (this.props.players[this.state.playerIndex] != undefined) {
+            if (this.props.players[this.state.playerIndex].isHost) {
+                if (this.props.players.length > 1) {
+                    let sid = this.props.players[(this.state.playerIndex + 1) % this.props.players.length];
+                    console.log("CURRENT PLAYERS ID: ", sid);
+                    let index = this.props.players.findIndex(x => x.id == sid.id);
+                    console.log("CURRENT PLAYERS INDEX: ", index);
+                    this.state.socket.emit('send-event-single', {action: "HOST-TRANSFER", data: {}, socket_id: sid.id});
+                }
             }
         }
         this.state.socket.disconnect();
+        this.props.setRoom('');
+        // ASYNC FUNCTION!
+        this.props.resetState();
         this.props.navigation.dispatch({ type: 'Back' });
     }
 
