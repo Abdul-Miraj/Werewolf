@@ -18,9 +18,10 @@ class DivideRoles extends Component {
         };
     }
 
-    getName = () => {
+    // return my player object
+    getPlayerObject = () => {
         let playerIndex = this.props.players.findIndex(x => x.id == this.state.id);
-        return this.props.players[playerIndex].name;
+        return this.props.players[playerIndex];
     };
 
     render() {
@@ -32,7 +33,7 @@ class DivideRoles extends Component {
                             {this.state.room}
                         </Text>
                         <Text style={styles.name}>
-                            {this.getName()}
+                            {this.getPlayerObject().name}
                         </Text>
                     </View>
                     <View style={styles.timer}>
@@ -49,6 +50,7 @@ class DivideRoles extends Component {
                 </View>
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.scroll} >
                     <DivideCard name='My Role:'>
+                        <RoleCard roles={[this.getPlayerObject()]} />
                     </DivideCard>
                     <DivideCard name='Roles:'>
                         <RoleCard roles={roles.slice(0, this.props.players.length)} />
