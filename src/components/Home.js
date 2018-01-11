@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, ScrollView } from 'react-native';
+import { View, Text, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
@@ -89,7 +89,9 @@ class Home extends Component {
     // render component when you join game
     joinRoom = () => {
         return (
-            <View>
+            <KeyboardAvoidingView
+                behavior="padding"
+            >
                 <Field
                     name='Name'
                     component={this.renderInput}
@@ -104,14 +106,16 @@ class Home extends Component {
                     btnTextTwo="Back"
                     btnPressTwo={() => this.setState({ render: 0 })}
                 />
-            </View>
+            </KeyboardAvoidingView >
         );
     };
 
     // render component when you create game
     createRoom = () => {
         return (
-            <View>
+            <KeyboardAvoidingView
+                behavior="padding"
+            >
                 <Field
                     name='Name'
                     component={this.renderInput}
@@ -122,7 +126,7 @@ class Home extends Component {
                     btnTextTwo="Back"
                     btnPressTwo={() => this.setState({ render: 0 })}
                 />
-            </View>
+            </KeyboardAvoidingView>
         );
     };
 

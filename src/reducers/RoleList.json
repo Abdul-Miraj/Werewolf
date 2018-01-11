@@ -2,7 +2,7 @@
     {
         "id": 1,
         "role": "Werewolf",
-        "description": "Select a player that you would like to eat."
+        "description": "Select a player that you would like to kill."
     },
     {
         "id": 2,
@@ -32,7 +32,7 @@
     {
         "id": 7,
         "role": "Werewolf",
-        "description": "Select a player that you would like to eat."
+        "description": "Select a player that you would like to kill."
     },
     {
         "id": 8,
@@ -47,7 +47,7 @@
     {
         "id": 10,
         "role": "Werewolf",
-        "description": "Select a player that you would like to eat."
+        "description": "Select a player that you would like to kill."
     },
     {
         "id": 11,
@@ -62,7 +62,7 @@
     {
         "id": 13,
         "role": "Werewolf",
-        "description": "Select a player that you would like to eat."
+        "description": "Select a player that you would like to kill."
     },
     {
         "id": 14,
