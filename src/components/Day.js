@@ -12,23 +12,27 @@ class Day extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: props.id
+            Day: 1,
+            id: props.id,
+            night: this.props.night[this.props.night.length -1]
         };
     }
 
     whoDied = () => {
-        if ('bodyguard' in this.props.night) {
-            if (this.props.night['bodyguard'] == this.props.night['werewolf']) {
-                this.props.night['werewolf'] = '';
+        const { night } = this.state;
+        if ('Bodyguard' in night) {
+            // if bg protected who the wolves killed
+            if (night['Bodyguard'] == night['Werewolf']) {
+                night['Werewolf'] = '';
             }
         }
-        console.log(this.props.night['werewolf']);
-        return(this.props.night['werewolf']);
+        console.log(night['Werewolf']);
+        return(night['Werewolf']);
     }
 
     render() {
-        console.log(this.state.id);
-        console.log(this.props.night);
+        console.log("DIED: ", this.whoDied());
+        console.log("NIGHT",this.props.night);
         return (
             <View style={styles.container}>
                 <View style={styles.Day}>
