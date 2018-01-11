@@ -66,7 +66,7 @@ class Lobby extends Component {
                 // change state
                 this.props.assignRoles(res.data.roles);
 
-                this.props.navigation.dispatch({ type: 'Roles' })
+                this.props.navigation.dispatch({ type: 'Roles' });
             }
         });
     }
