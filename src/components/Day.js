@@ -16,7 +16,19 @@ class Day extends Component {
         };
     }
 
+    whoDied = () => {
+        if ('bodyguard' in this.props.night) {
+            if (this.props.night['bodyguard'] == this.props.night['werewolf']) {
+                this.props.night['werewolf'] = '';
+            }
+        }
+        console.log(this.props.night['werewolf']);
+        return(this.props.night['werewolf']);
+    }
+
     render() {
+        console.log(this.state.id);
+        console.log(this.props.night);
         return (
             <View style={styles.container}>
                 <View style={styles.Day}>

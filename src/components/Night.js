@@ -52,6 +52,8 @@ class Night extends Component {
             }
             // go to day once everyone has been called
             if (wakeUp == '') {
+                console.log("NNNNNNN");
+                console.log(this.props.night);
                 this.props.navigation.dispatch({ type: 'Day' });
             }
 
