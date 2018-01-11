@@ -36,6 +36,7 @@ class AppWithNavigationState extends Component {
         }
         // when back button is pressed go home, erase players and connection
         dispatch({ type: 'Home' });
+        this.props.socket.disconnect();
         return true;
     };
     render() {
@@ -55,6 +56,7 @@ AppWithNavigationState.propTypes = {
 
 const mapStateToProps = state => ({
     nav: state.nav,
+    socket: state.socket
 });
 
 export default connect(mapStateToProps)(AppWithNavigationState);

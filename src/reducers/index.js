@@ -5,6 +5,7 @@ import nightReducer from './nightReducer';
 import { reducer as formReducer } from 'redux-form';
 import userReducer from './userReducer';
 import roomReducer from './roomReducer';
+import socketReducer from './socketReducer';
 
 export default combineReducers({
     nav: navReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
     form: formReducer,
     id: userReducer,
     room: roomReducer,
+    socket: socketReducer
 });

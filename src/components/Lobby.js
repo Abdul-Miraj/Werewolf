@@ -19,7 +19,7 @@ class Lobby extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            socket: props.navigation.state.params.socket,
+            socket: this.props.socket,//props.navigation.state.params.socket,
             playerIndex: 0,//props.players.findIndex(x => x.id == props.id),
             isHost: true,
         };
@@ -186,6 +186,7 @@ const mapStateToProps = state => {
         room: state.room,
         players: state.players,
         room: state.room,
+        socket: state.socket
     };
 };
 

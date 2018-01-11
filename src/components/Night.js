@@ -54,7 +54,6 @@ class Night extends Component {
             if (wakeUp == '') {
                 this.props.navigation.dispatch({ type: 'Day' });
             }
-
         }
     }
 

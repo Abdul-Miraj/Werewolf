@@ -23,6 +23,7 @@ class Home extends Component {
     callLobby = (roomCode, socket, name) => {
         // update the redux state with name and room code
         this.props.setRoom(roomCode);
+        this.props.setSocket(socket);
         this.props.navigation.navigate(
             'Lobby',
             { socket },

@@ -1,4 +1,4 @@
-import { UPDATE_NIGHT, ADD_NIGHT, GET_NIGHT, ID, ROOM, ADD_PLAYER, REMOVE_PLAYER, RESET_STATE, ASSIGN_ROLES } from './actionTypes';
+import { UPDATE_NIGHT, ADD_NIGHT, GET_NIGHT, ID, ROOM, ADD_PLAYER, REMOVE_PLAYER, RESET_STATE, ASSIGN_ROLES, SET_SOCKET } from './actionTypes';
 
 // update the night counter
 export const addNight = (night) => {
@@ -69,3 +69,10 @@ export const assignRoles = (index) => {
   }
 };
 
+// add socket
+export const setSocket = (socket) => {
+  return {
+    type: SET_SOCKET,
+    payload: socket
+  };
+};
