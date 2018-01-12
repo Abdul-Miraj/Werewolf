@@ -23,18 +23,6 @@ class WakePlayer extends Component {
 
     // get the ID of the player selected back
     myCallback = (dataFromChild) => {
-        const night_state = {
-            role: this.props.role, 
-            value: dataFromChild
-        }
-        // emit to the server
-        const data = {
-            action: "NIGHT-STATE-UPDATED",
-            room_id: this.props.room,
-            data: night_state
-        }
-
-        this.props.socket.emit('send-event-all', data);
         this.setState({ selectionData: dataFromChild });
     }
 
@@ -57,8 +45,19 @@ class WakePlayer extends Component {
                             bgColor="#222c31"
                             textStyle={{ fontSize: 20, color: '#4fd09a' }}
                             onTimeElapsed={() => {
-                                //console.log("DATA: ", this.state.selectionData);
-                                this.props.updateNight({ role: this.props.role, value: this.state.selectionData });
+                                const night_state = {
+                                    role: this.props.role,
+                                    value: this.state.selectionData
+                                }
+                                // emit to the server
+                                const data = {
+                                    action: "NIGHT-STATE-UPDATED",
+                                    room_id: this.props.room,
+                                    data: night_state
+                                }
+
+                                this.props.socket.emit('send-event-all', data);
+                                this.props.updateNight(night_state);
                             }} // update the state of the players woken up
                         />
                     </View>
