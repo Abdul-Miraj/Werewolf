@@ -22,11 +22,9 @@ class Night extends Component {
     componentDidMount() {
         this.props.socket.on('new-event-all', res => {
             if ('NIGHT-STATE-UPDATED' == res.action) {
-
                 // update the night state 
-                this.props.updateNight(res.data.night_state);
+                this.props.updateNight(res.data);
             }
-
         });
     }
 

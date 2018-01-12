@@ -23,11 +23,15 @@ class WakePlayer extends Component {
 
     // get the ID of the player selected back
     myCallback = (dataFromChild) => {
+        const night_state = {
+            role: this.props.role, 
+            value: dataFromChild
+        }
         // emit to the server
         const data = {
             action: "NIGHT-STATE-UPDATED",
             room_id: this.props.room,
-            data: { night_state: dataFromChild}
+            data: night_state
         }
 
         this.props.socket.emit('send-event-all', data);
