@@ -49,6 +49,7 @@ class WakePlayer extends Component {
                             }} // update the state of the players woken up
                         />
                     </View>
+
                 </View>
                 <View style={night}>
                     <ScrollView contentContainerStyle={{ flexGrow: 1 }} >

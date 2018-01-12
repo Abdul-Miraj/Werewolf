@@ -21,7 +21,7 @@ class Lobby extends Component {
         this.state = {
             socket: this.props.socket,//props.navigation.state.params.socket,
             playerIndex: 0,//props.players.findIndex(x => x.id == props.id),
-            isHost: true,
+            isHost: true
         };
     }
 
@@ -63,6 +63,7 @@ class Lobby extends Component {
                 this.props.assignRoles(res.data.roles);
                 this.props.navigation.dispatch({ type: 'Roles' });
             }
+
         });
     }
 
@@ -91,13 +92,15 @@ class Lobby extends Component {
         // assign the roles to each player
         this.assignRole();
         const updatedState = this.props.players;
-        const options = {
+
+        const data = {
             action: "STARTING-GAME",
             room_id: this.props.room,
             data: { roles: updatedState }
         };
         // send the assigned roles to every client
-        this.state.socket.emit('send-event-all', options);
+        this.state.socket.emit('send-event-all', data);
+
         // go to the roles screen
         this.props.navigation.dispatch({ type: 'Roles' });
     };
@@ -105,13 +108,14 @@ class Lobby extends Component {
     // disconnect and update state when you leave game
     leaveGame = () => {
         // notify all other sockets that this socket is leaving the room.
-        const options = {
+        const data = {
             action: "PLAYER-HAS-LEFT-ROOM",
             room_id: this.props.room,
             data: { id: this.props.id }
         }
-        // 
-        this.state.socket.emit('send-event-all', options)
+
+        this.state.socket.emit('send-event-all', data)
+
         // transfer host if current one leaves
         if (this.props.players[this.state.playerIndex] != undefined) {
             if (this.props.players[this.state.playerIndex].isHost) {

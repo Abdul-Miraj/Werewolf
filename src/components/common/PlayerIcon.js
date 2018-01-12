@@ -55,7 +55,20 @@ class PlayerIcon extends Component {
     // function that allows selection by player
     allowSelect = () => {
         this.setState({ isSelected: true });
-        { this.props.callbackFromParent === undefined ? null : this.props.callbackFromParent(this.storeChoice())}
+        
+        //{ this.props.callbackFromParent === undefined ? null : this.props.callbackFromParent(this.storeChoice()) }
+        this.props.updateNight({ role: this.state.myRole, value: this.storeChoice() });
+
+        const data = {
+            action: "NIGHT-STATE-UPDATED",
+            room_id: this.state.room,
+            data: { night_state: this.props.night }
+        };
+        console.log(data);
+
+        // send this.props.night to all players SERVER
+        this.props.socket.emit('send-event-all', data);
+
     };
 
     // tile icon
@@ -122,6 +135,7 @@ const styles = {
 const mapStateToProps = state => {
     return {
         night: state.night,
+        socket: state.socket
     };
 };
 

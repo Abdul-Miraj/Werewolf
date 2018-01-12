@@ -19,6 +19,18 @@ class Night extends Component {
         };
     }
 
+    componentDidMount() {
+        this.props.socket.on('new-event-all', res => {
+            console.log("NIGHT.js");
+            if ('NIGHT-STATE-UPDATED' == res.action) {
+
+                // update the night state 
+                this.props.updateNight(data.night_state);
+            }
+
+        });
+    }
+
     // create the new night object and pass to server each time 
     componentWillMount() {
         shuffle(this.props.players);
@@ -122,6 +134,7 @@ const mapStateToProps = state => {
         players: state.players,
         night: state.night,
         id: state.id,
+        socket: state.socket
     };
 };
 
