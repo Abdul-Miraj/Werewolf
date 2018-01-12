@@ -10,3 +10,5 @@ export const REMOVE_PLAYER = 'REMOVE_PLAYER';
 export const RESET_STATE = 'RESET_STATE';
 export const ASSIGN_ROLES = 'ASSIGN_ROLES';
 export const SET_SOCKET = 'SET_SOCKET';
+export const UPDATE_DAY = 'UPDATE_DAY';
+export const SET_DEAD = 'SET_DEAD';

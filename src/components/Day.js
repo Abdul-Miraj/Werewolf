@@ -17,25 +17,23 @@ class Day extends Component {
             night: this.props.night[this.props.night.length -1]
         };
     }
+    
+    componentDidMount() {
+        console.log('MOUNT');
+        console.log(this.props.setDead(this.state.night['Werewolf']));
+        console.log(this.props.players);
 
-    whoDied = () => {
-        const { night } = this.state;
-        if ('Bodyguard' in night) {
-            // if bg protected who the wolves killed
-            if (night['Bodyguard'] == night['Werewolf']) {
-                night['Werewolf'] = '';
-            }
-        }
-        return(night['Werewolf']);
+    }
+
+    shouldComponentUpdate() {
+        return false;
     }
 
     render() {
-        console.log("DIED: ", this.whoDied());
-        console.log("NIGHT",this.props.night);
         return (
             <View style={styles.container}>
                 <View style={styles.Day}>
-                    <Text style={styles.Title}>Day {this.state.Day}</Text>
+                    <Text style={styles.Title}>Day{this.state.Day}</Text>
                 </View>
             </View>
         );
@@ -58,6 +56,13 @@ const styles = {
         justifyContent: 'center',
         alignItems: 'center',
     },
+    timer: {
+        flex: 1,
+        paddingTop: 40,
+        paddingRight: 25,
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end'
+    }
 };
 
 // Hide the navigation
