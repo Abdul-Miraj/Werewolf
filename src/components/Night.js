@@ -4,7 +4,6 @@ import { View, Text, ScrollView } from 'react-native';
 import * as actions from '../actions';
 import shuffle from 'shuffle-array';
 import WakePlayer from './WakePlayer';
-import io from 'socket.io-client';
 import roles from '../reducers/RoleList.json';
 
 /**
@@ -22,11 +21,10 @@ class Night extends Component {
 
     componentDidMount() {
         this.props.socket.on('new-event-all', res => {
-            console.log("NIGHT.js");
             if ('NIGHT-STATE-UPDATED' == res.action) {
 
                 // update the night state 
-                this.props.updateNight(data.night_state);
+                this.props.updateNight(res.data.night_state);
             }
 
         });
@@ -44,7 +42,6 @@ class Night extends Component {
             }
         });
         this.props.addNight(night);
-        console.log("NIGHT: ", this.props.night);
     }
 
     // when user votes update their screen to display night 

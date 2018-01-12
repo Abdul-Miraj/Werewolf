@@ -21,29 +21,16 @@ class WakePlayer extends Component {
         };
     }
 
-    componentDidMount() {
-        console.log("COMP MOUNTRED : ");
-        const { socket } = this.props;
-        socket.on('new-event-all', res => {
-            console.log("SOCKET ON : ");
-            if ('NIGHT-STATE-UPDATED' == res.action) {
-                // delete player from state object
-                console.log("ABDULS PROBLEM", res);
-                //this.props.removePlayer(this.props.players.findIndex(x => x.id == res.data.id));
-            }
-        });
-    }
-
     // get the ID of the player selected back
     myCallback = (dataFromChild) => {
         // emit to the server
-        const options = {
+        const data = {
             action: "NIGHT-STATE-UPDATED",
             room_id: this.props.room,
-            data: { id: "KEEEK"}
+            data: { night_state: dataFromChild}
         }
-        console.log('ROOM:', options);
-        this.props.socket.emit('send-event-all', options);
+
+        this.props.socket.emit('send-event-all', data);
         this.setState({ selectionData: dataFromChild });
     }
 
@@ -66,7 +53,7 @@ class WakePlayer extends Component {
                             bgColor="#222c31"
                             textStyle={{ fontSize: 20, color: '#4fd09a' }}
                             onTimeElapsed={() => {
-                                console.log("DATA: ", this.state.selectionData);
+                                //console.log("DATA: ", this.state.selectionData);
                                 this.props.updateNight({ role: this.props.role, value: this.state.selectionData });
                             }} // update the state of the players woken up
                         />
