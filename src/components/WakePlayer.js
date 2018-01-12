@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
+import io from 'socket.io-client';
 import CountdownCircle from 'react-native-countdown-circle';
 import roles from '../reducers/RoleList.json';
 import PlayerSelection from './PlayerSelection';
@@ -20,8 +21,29 @@ class WakePlayer extends Component {
         };
     }
 
+    componentDidMount() {
+        console.log("COMP MOUNTRED : ");
+        const { socket } = this.props;
+        socket.on('new-event-all', res => {
+            console.log("SOCKET ON : ");
+            if ('NIGHT-STATE-UPDATED' == res.action) {
+                // delete player from state object
+                console.log("ABDULS PROBLEM", res);
+                //this.props.removePlayer(this.props.players.findIndex(x => x.id == res.data.id));
+            }
+        });
+    }
+
     // get the ID of the player selected back
     myCallback = (dataFromChild) => {
+        // emit to the server
+        const options = {
+            action: "NIGHT-STATE-UPDATED",
+            room_id: this.props.room,
+            data: { id: "KEEEK"}
+        }
+        console.log('ROOM:', options);
+        this.props.socket.emit('send-event-all', options);
         this.setState({ selectionData: dataFromChild });
     }
 
@@ -102,6 +124,8 @@ const styles = {
 const mapStateToProps = state => {
     return {
         players: state.players,
+        socket: state.socket,
+        room: state.room
     };
 };
 

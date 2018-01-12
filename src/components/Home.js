@@ -26,7 +26,6 @@ class Home extends Component {
         this.props.setSocket(socket);
         this.props.navigation.navigate(
             'Lobby',
-            { socket },
         );
     };
 
