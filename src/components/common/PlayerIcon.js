@@ -58,8 +58,11 @@ class PlayerIcon extends Component {
     allowSelect = () => {
         this.setState({ isSelected: true });
         this.props.updateNight({ role: this.state.myRole, value: this.storeChoice() });
+        // send this.props.night to all players SERVER
+
     };
 
+    // tile
     showCard = () => {
         return (
             <TouchableOpacity onPress={() => {
@@ -86,7 +89,6 @@ class PlayerIcon extends Component {
         );
     }
 }
-
 
 const styles = {
     name: {

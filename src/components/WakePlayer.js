@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
     Text,
     View,
@@ -8,15 +8,21 @@ import CountdownCircle from 'react-native-countdown-circle';
 import roles from '../reducers/RoleList.json';
 
 // Component displays description timer and decision
-const WakePlayer = (props) => {
-    const { header, highlight, timer, night, selection } = styles;
-    let roleIndex = roles.findIndex(x => x.role == props.role);
-    const role = roles[roleIndex];
-    return (
-        <View style={{ flex: 1 }} >
+class WakePlayer extends Component {
+
+    myCallback = (dataFromChild) => {
+        console.log("DATA: ", dataFromChild);
+    }
+
+    render() {
+        const { header, highlight, timer, night, selection } = styles;
+        let roleIndex = roles.findIndex(x => x.role == props.role);
+        const role = roles[roleIndex];
+        return (
+            <View style={{ flex: 1 }} >
             <View style={{ paddingTop: 40, flexDirection: 'row' }}>
                 <Text style={header}>
-                <Text style={highlight} >{role.role}</Text>: {role.description}
+                    <Text style={highlight} >{role.role}</Text>: {role.description}
                 </Text>
                 <View style={timer}>
                     <CountdownCircle
@@ -41,8 +47,9 @@ const WakePlayer = (props) => {
                 </View>
             </View>
         </View>
-    );
-};
+        );
+    }
+}
 
 const styles = {
     night: {

@@ -26,7 +26,6 @@ class Day extends Component {
                 night['Werewolf'] = '';
             }
         }
-        console.log(night['Werewolf']);
         return(night['Werewolf']);
     }
 
