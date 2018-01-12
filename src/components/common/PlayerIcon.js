@@ -46,17 +46,18 @@ class PlayerIcon extends Component {
             }
         } else if (this.state.myRole == 'Werewolf') {
             // ww: { selections: [], kill: "" }
-            return this.state.player.name;
+            return this.state.player.id;
         } else {
-            // return players name otherwise
+            // return players id otherwise
             // { role: selection } format
-            return this.state.player.name;
+            return this.state.player.id;
         }
     };
 
     // function that allows one selection
     allowSelect = () => {
         this.setState({ isSelected: true });
+        //{ this.props.callbackFromParent === undefined ? null : this.props.callbackFromParent(this.storeChoice()) }
         this.props.updateNight({ role: this.state.myRole, value: this.storeChoice() });
         // send this.props.night to all players SERVER
 
@@ -84,7 +85,7 @@ class PlayerIcon extends Component {
     render() {
         return (
             <View>
-                {this.showTeam() ? this.showCard() : null }
+                {this.showTeam() ? this.showCard() : null}
             </View>
         );
     }
@@ -125,7 +126,7 @@ const styles = {
 
 const mapStateToProps = state => {
     return {
-        night: state.night
+        night: state.night,
     };
 };
 

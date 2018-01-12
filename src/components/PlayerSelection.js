@@ -8,10 +8,10 @@ import {
 import PlayerIcon from './common/PlayerIcon';
 
 // For each player create an icon card
-renderIcons = (players, role) => {
+renderIcons = (players, role, props) => {
     return (
         players.map(player => (
-            <PlayerIcon key={player.id} player={player} myRole={role}/> // myRole is the role of the team that is awake
+            <PlayerIcon callbackFromParent={this.myCallback} key={player.id} player={player} myRole={role}/> // myRole is the role of the team that is awake
         ))
     );
 };
@@ -21,7 +21,7 @@ const PlayerSelection = (props) => {
     return (
         <ScrollView style={{ flex: 1 }} >
             <View style={styles.container} >
-                {this.renderIcons(props.players, props.role)}
+                {this.renderIcons(props.players, props.role, props)}
             </View>
         </ScrollView>
     );

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
 import * as actions from '../actions';
-import PlayerSelection from './PlayerSelection';
 import shuffle from 'shuffle-array';
 import WakePlayer from './WakePlayer';
 import roles from '../reducers/RoleList.json';
@@ -57,7 +56,8 @@ class Night extends Component {
         }
     }
 
-    // functino to display night screen
+    // function to display night screen
+    // make into comp
     renderNight = () => {
         return (
             <View style={styles.night}>
@@ -69,9 +69,11 @@ class Night extends Component {
     // functino that passes called role and lets players do selection
     renderWake = () => {
         return (
-            <WakePlayer night={this.props.night[this.state.awakeRole]} role={this.state.awakeRole}>
-                <PlayerSelection players={this.props.players} role={this.state.awakeRole} />
-            </WakePlayer>
+            <WakePlayer
+                night={this.props.night[this.state.awakeRole]}
+                role={this.state.awakeRole}
+                players={this.props.players}
+            />
         );
     };
 
