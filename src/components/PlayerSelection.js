@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
     Text,
     View,
@@ -7,25 +7,41 @@ import {
 } from 'react-native';
 import PlayerIcon from './common/PlayerIcon';
 
-// For each player create an icon card
-renderIcons = (players, role, props) => {
-    return (
-        players.map(player => (
-            <PlayerIcon callbackFromParent={this.myCallback} key={player.id} player={player} myRole={role}/> // myRole is the role of the team that is awake
-        ))
-    );
-};
+// Takes an array of player objects and creates icons
+class PlayerSelection extends Component {
 
-// Component thats decide which players can be voted for
-const PlayerSelection = (props) => {
-    return (
-        <ScrollView style={{ flex: 1 }} >
-            <View style={styles.container} >
-                {this.renderIcons(props.players, props.role, props)}
-            </View>
-        </ScrollView>
-    );
-};
+    // For each player create an icon card
+    renderIcons = (players, role) => {
+        return (
+            players.map(player => (
+                <PlayerIcon
+                    callbackFromParent={this.myCallback}
+                    key={player.id}
+                    player={player}
+                    myRole={role} // myRole is the role of the team that is awake
+                />
+            ))
+        );
+    };
+
+    // pass the data back to WakePlayer
+    myCallback = (dataFromChild) => {
+        // pass data back if there are any
+        if (dataFromChild) {
+            this.props.callbackFromParent(dataFromChild);
+        }
+    }
+
+    render() {
+        return (
+            <ScrollView style={{ flex: 1 }} >
+                <View style={styles.container} >
+                    {this.renderIcons(this.props.players, this.props.role)}
+                </View>
+            </ScrollView>
+        );
+    }
+}
 
 const styles = {
     container: {

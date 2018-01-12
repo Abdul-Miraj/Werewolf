@@ -5,7 +5,6 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
 
 /**
  * Component that creates icons for each player.
@@ -49,21 +48,17 @@ class PlayerIcon extends Component {
             return this.state.player.id;
         } else {
             // return players id otherwise
-            // { role: selection } format
             return this.state.player.id;
         }
     };
 
-    // function that allows one selection
+    // function that allows selection by player
     allowSelect = () => {
         this.setState({ isSelected: true });
-        //{ this.props.callbackFromParent === undefined ? null : this.props.callbackFromParent(this.storeChoice()) }
-        this.props.updateNight({ role: this.state.myRole, value: this.storeChoice() });
-        // send this.props.night to all players SERVER
-
+        { this.props.callbackFromParent === undefined ? null : this.props.callbackFromParent(this.storeChoice())}
     };
 
-    // tile
+    // tile icon
     showCard = () => {
         return (
             <TouchableOpacity onPress={() => {
@@ -130,4 +125,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, actions)(PlayerIcon);
+export default connect(mapStateToProps)(PlayerIcon);

@@ -4,15 +4,25 @@ import {
     View,
     ScrollView
 } from 'react-native';
+import * as actions from '../actions';
+import { connect } from 'react-redux';
 import CountdownCircle from 'react-native-countdown-circle';
 import roles from '../reducers/RoleList.json';
 import PlayerSelection from './PlayerSelection';
 
+
 // Component displays description timer and decision
 class WakePlayer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectionData: '',
+        };
+    }
 
+    // get the ID of the player selected back
     myCallback = (dataFromChild) => {
-        console.log("DATA: ", dataFromChild);
+        this.setState({ selectionData: dataFromChild });
     }
 
     render() {
@@ -33,7 +43,10 @@ class WakePlayer extends Component {
                             color="#4fd09a"
                             bgColor="#222c31"
                             textStyle={{ fontSize: 20, color: '#4fd09a' }}
-                            onTimeElapsed={() => console.log('Timer ended')} // update the state of the players woken up
+                            onTimeElapsed={() => {
+                                console.log("DATA: ", this.state.selectionData);
+                                this.props.updateNight({ role: this.props.role, value: this.state.selectionData });
+                            }} // update the state of the players woken up
                         />
                     </View>
                 </View>
@@ -85,4 +98,10 @@ const styles = {
     }
 };
 
-export default WakePlayer;
+const mapStateToProps = state => {
+    return {
+        players: state.players,
+    };
+};
+
+export default connect(mapStateToProps, actions)(WakePlayer);

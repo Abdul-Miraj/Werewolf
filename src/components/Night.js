@@ -36,7 +36,6 @@ class Night extends Component {
     // when user votes update their screen to display night 
     componentWillReceiveProps(nextProps) {
         if (this.props.night != nextProps.night) {
-            console.log("PROPS: ", nextProps.night);
             let wakeUp = '';
             let nightObj = nextProps.night[nextProps.night.length - 1];
             if (nightObj != undefined) {
