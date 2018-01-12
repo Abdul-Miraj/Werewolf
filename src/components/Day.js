@@ -14,14 +14,18 @@ class Day extends Component {
         this.state = {
             Day: 1,
             id: props.id,
-            night: this.props.night[this.props.night.length -1]
+            night: this.props.night[this.props.night.length - 1]
         };
     }
-    
+
     componentDidMount() {
-        console.log('MOUNT');
-        console.log(this.props.setDead(this.state.night['Werewolf']));
-        console.log(this.props.players);
+        let night = this.state.night;
+
+        if (!('Bodyguard' in night) || (night['Bodyguard'] != night['Werewolf'])) {
+            this.props.setDead(night['Werewolf']);
+        }
+
+        console.log("PLAYERS AFTER NIGHT: ", this.props.players);
 
     }
 
