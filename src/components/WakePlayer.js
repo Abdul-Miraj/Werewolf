@@ -21,6 +21,10 @@ class WakePlayer extends Component {
         };
     }
 
+    shouldComponentUpdate() {
+        return false;
+    }
+
     // get the ID of the player selected back
     myCallback = (dataFromChild) => {
         this.setState({ selectionData: dataFromChild });

@@ -18,15 +18,12 @@ class Day extends Component {
         };
     }
 
-    componentDidMount() {
+    componentWillMount() {
         let night = this.state.night;
-
         if (!('Bodyguard' in night) || (night['Bodyguard'] != night['Werewolf'])) {
             this.props.setDead(night['Werewolf']);
         }
-
         console.log("PLAYERS AFTER NIGHT: ", this.props.players);
-
     }
 
     shouldComponentUpdate() {
@@ -38,6 +35,7 @@ class Day extends Component {
             <View style={styles.container}>
                 <View style={styles.Day}>
                     <Text style={styles.Title}>Day{this.state.Day}</Text>
+                    <PlayerSelection players={this.props.players} role={null}/>
                 </View>
             </View>
         );

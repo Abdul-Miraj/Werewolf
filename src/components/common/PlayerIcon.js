@@ -23,13 +23,17 @@ class PlayerIcon extends Component {
     // Return true if you want to select yourself
     showTeam = () => {
         let show = true;
+        // Dont show if dead
+        if (this.state.player.isDead) {
+            return false;
+        }
         // Roles that are able to select themselves
         if ((this.state.myRole == 'Bodyguard') || (this.state.myRole == 'Werewolf')) {
             return show;
         }
         // hide the player if the current role is myself
         if (this.state.myRole == this.state.player.role) {
-            show = false;
+            return false;
         }
         return show;
     };

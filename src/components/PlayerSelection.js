@@ -13,14 +13,19 @@ class PlayerSelection extends Component {
     // For each player create an icon card
     renderIcons = (players, role) => {
         return (
-            players.map(player => (
-                <PlayerIcon
-                    callbackFromParent={this.myCallback}
-                    key={player.id}
-                    player={player}
-                    myRole={role} // myRole is the role of the team that is awake
-                />
-            ))
+            players.map(player => {
+                console.log(player);
+                if (player.isDead === false) {
+                    return (
+                        <PlayerIcon
+                            callbackFromParent={this.myCallback}
+                            key={player.id}
+                            player={player}
+                            myRole={role} // myRole is the role of the team that is awake
+                        />
+                    )
+                }
+            })
         );
     };
 
