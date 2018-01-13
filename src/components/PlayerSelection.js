@@ -14,7 +14,6 @@ class PlayerSelection extends Component {
     renderIcons = (players, role) => {
         return (
             players.map(player => {
-                console.log(player);
                 if (player.isDead === false) {
                     return (
                         <PlayerIcon

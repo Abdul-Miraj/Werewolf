@@ -11,7 +11,7 @@ export default (state = initalState, action) => {
         case ADD_PLAYER:
             return [...state, action.payload];
         case REMOVE_PLAYER:
-            return state.slice(0, action.payload).concat(state.slice(action.payload + 1, state.length - 1));
+            return state.slice(0, action.payload).concat(state.slice(action.payload + 1, state.length));
         case RESET_STATE:
             return [];
         case ASSIGN_ROLES:
