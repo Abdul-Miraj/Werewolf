@@ -35,8 +35,15 @@ class AppWithNavigationState extends Component {
             return false;
         }
         // when back button is pressed go home, erase players and connection
-        dispatch({ type: 'Home' });
         this.props.socket.disconnect();
+        dispatch(
+            NavigationActions.reset({
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'Home' }),
+              ],
+            }),
+          )
         return true;
     };
     render() {
