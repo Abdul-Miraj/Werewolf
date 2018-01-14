@@ -17,11 +17,8 @@ export default (state = initalState, action) => {
         case ASSIGN_ROLES:
             return action.payload;
         case SET_DEAD:
-            console.log('set dead ');
-            for (let i = 0; i < state.length ; i++) {
-        
+            for (let i = 0; i < state.length; i++) {
                 if (state[i].id == action.payload) {
-                    console.log("PLDEAD");
                     state[i].isDead = true;
                 }
             }

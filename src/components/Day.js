@@ -51,6 +51,7 @@ class Day extends Component {
             value: dataFromChild
         }
         this.props.updateDay(day_state);
+        console.log("DAY: ", this.props.day);
     }
 
     // check to see if you are dead
@@ -72,7 +73,7 @@ class Day extends Component {
     renderDead = () => {
         return (
             <View style={styles.Day}>
-                <Text style={styles.Title}>Day {this.state.Day}</Text>
+                <Text style={styles.Title}>You have been killed.</Text>
             </View>
         );
     }
@@ -80,7 +81,8 @@ class Day extends Component {
     // display voting screen
     renderDay = () => {
         return (
-            <View style={styles.dead}>
+            <View style={styles.Day}>
+                <Text style={styles.Title}>Day 1</Text>
                 <PlayerSelection callbackFromParent={this.myCallback} players={this.props.players} day={true} />
             </View>
         );
@@ -105,17 +107,12 @@ const styles = {
         fontSize: 30,
         fontWeight: '500',
         color: 'white',
+        textAlign: 'center'
     },
     Day: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    dead: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop: 30
     },
 };
 
