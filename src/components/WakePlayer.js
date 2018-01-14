@@ -49,10 +49,15 @@ class WakePlayer extends Component {
                             bgColor="#222c31"
                             textStyle={{ fontSize: 20, color: '#4fd09a' }}
                             onTimeElapsed={() => {
-                                const night_state = {
+                                let night_state = {
                                     role: this.props.role,
                                     value: this.state.selectionData
                                 }
+                                // if no votes put None in selection
+                                if (this.state.selectionData === '') {
+                                    night_state.value = "None";
+                                }
+        
                                 // emit to the server
                                 const data = {
                                     action: "NIGHT-STATE-UPDATED",

@@ -9,7 +9,12 @@ export default (state = initialNavState, action) => {
     switch (action.type) {
         case 'Back':
             nextState = AppNavigator.router.getStateForAction(
-                NavigationActions.back(),
+                NavigationActions.reset({
+                    index: 0,
+                    actions: [
+                        NavigationActions.navigate({ routeName: 'Home' }),
+                    ],
+                }),
                 state
             );
             break;
@@ -34,12 +39,6 @@ export default (state = initialNavState, action) => {
         case 'Day':
             nextState = AppNavigator.router.getStateForAction(
                 NavigationActions.navigate({ routeName: 'Day' }),
-                state
-            );
-            break;
-        case 'Home':
-            nextState = AppNavigator.router.getStateForAction(
-                NavigationActions.navigate({ routeName: 'Home' }),
                 state
             );
             break;

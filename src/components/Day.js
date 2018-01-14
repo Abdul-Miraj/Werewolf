@@ -4,6 +4,8 @@ import { View, Text, ScrollView } from 'react-native';
 import * as actions from '../actions';
 import CountdownCircle from 'react-native-countdown-circle';
 import PlayerSelection from './PlayerSelection';
+import ButtonSet from './common/ButtonSet';
+import { setRoom } from '../actions';
 
 /**
  *  Day, component to wake players
@@ -42,6 +44,13 @@ class Day extends Component {
 
     shouldComponentUpdate() {
         return false;
+    }
+
+    componentWillUnmount() {
+        const { socket, setRoom, resetState } = this.props;
+        socket.disconnect();
+        setRoom('');
+        resetState();
     }
 
     //gets callback from playerselection and update vote
@@ -92,6 +101,13 @@ class Day extends Component {
         return (
             <View style={styles.container}>
                 {this.isDead() ? this.renderDead() : this.renderDay()}
+                <ButtonSet
+                    isDisabled={this.isDead()}
+                    btnTextOne="Start Night"
+                    btnPressOne={() => console.log("Go to next night")}
+                    btnTextTwo="Leave Game"
+                    btnPressTwo={() => this.props.navigation.dispatch({ type: 'Back' })}
+                />
             </View>
         );
     }
@@ -101,6 +117,7 @@ const styles = {
     container: {
         flex: 1,
         backgroundColor: '#a7b4a0',
+        paddingBottom: 10
     },
     Title: {
         margin: 40,
@@ -127,6 +144,8 @@ const mapStateToProps = state => {
         night: state.night,
         id: state.id,
         day: state.day,
+        room: state.room,
+        socket: state.socket
     };
 };
 

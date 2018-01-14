@@ -58,8 +58,7 @@ class PlayerIcon extends Component {
 
     // function that allows selection by player
     allowSelect = () => {
-        this.setState({ isSelected: true });
-        { this.props.callbackFromParent === undefined ? null : this.props.callbackFromParent(this.storeChoice())}
+        { this.props.callbackFromParent === undefined ? null : this.props.callbackFromParent(this.storeChoice()) }
     };
 
     // tile icon
@@ -68,9 +67,13 @@ class PlayerIcon extends Component {
             <TouchableOpacity onPress={() => {
                 // role is null in the lobby screen
                 if (this.props.myRole != null) {
-                    { this.props.night[this.state.myRole] == null ? this.allowSelect() : null }
+                    if (this.props.night[this.state.myRole] == null) {
+                        this.setState({ isSelected: true });
+                        this.allowSelect();
+                    }
                 }
                 else if (this.props.day) {
+                    this.setState({ isSelected: !this.state.isSelected });
                     this.allowSelect();
                 }
             }}>
