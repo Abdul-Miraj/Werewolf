@@ -30,6 +30,11 @@ class Lobby extends Component {
         this.isHost();
         const { socket, playerIndex } = this.state;
         socket.on('player-joined-lobby', res => {
+            /*
+            
+                WE NEED TO ADD NEW VOTE FIELD
+            
+            */
             this.props.addPlayer({ id: res.socket_id, name: res.player_name, role: '', isDead: false, isHost: false });
             let name = "";
             if (this.props.players[playerIndex] !== undefined) {

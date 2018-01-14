@@ -11,7 +11,7 @@ import PlayerIcon from './common/PlayerIcon';
 class PlayerSelection extends Component {
 
     // For each player create an icon card
-    renderIcons = (players, role) => {
+    renderIcons = (players, role, day) => {
         return (
             players.map(player => {
                 if (player.isDead === false) {
@@ -21,6 +21,7 @@ class PlayerSelection extends Component {
                             key={player.id}
                             player={player}
                             myRole={role} // myRole is the role of the team that is awake
+                            day = {day}
                         />
                     )
                 }
@@ -30,6 +31,7 @@ class PlayerSelection extends Component {
 
     // pass the data back to WakePlayer
     myCallback = (dataFromChild) => {
+        console.log("PS DFC: ", dataFromChild);
         // pass data back if there are any
         if (dataFromChild) {
             this.props.callbackFromParent(dataFromChild);
@@ -40,7 +42,7 @@ class PlayerSelection extends Component {
         return (
             <ScrollView style={{ flex: 1 }} >
                 <View style={styles.container} >
-                    {this.renderIcons(this.props.players, this.props.role)}
+                    {this.renderIcons(this.props.players, this.props.role, this.props.day)}
                 </View>
             </ScrollView>
         );

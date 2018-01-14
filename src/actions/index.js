@@ -1,4 +1,4 @@
-import { UPDATE_NIGHT, ADD_NIGHT, GET_NIGHT, ID, ROOM, ADD_PLAYER, REMOVE_PLAYER, RESET_STATE, ASSIGN_ROLES, SET_SOCKET, UPDATE_DAY, SET_DEAD } from './actionTypes';
+import { UPDATE_NIGHT, ADD_NIGHT, GET_NIGHT, ID, ROOM, ADD_PLAYER, REMOVE_PLAYER, RESET_STATE, ASSIGN_ROLES, SET_SOCKET, UPDATE_DAY, SET_DEAD, ADD_DAY } from './actionTypes';
 
 // update the night counter
 export const addNight = (night) => {
@@ -81,5 +81,20 @@ export const setDead = (id) => {
   return {
     type: SET_DEAD,
     payload: id
+  };
+};
+
+export const addDay = (day) => {
+  return {
+    type: ADD_DAY,
+    payload: day
+  };
+};
+
+// update the object that stores Day decisions
+export const updateDay = (day) => {
+  return {
+    type: UPDATE_DAY,
+    payload: day
   };
 };

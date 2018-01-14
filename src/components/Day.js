@@ -14,7 +14,7 @@ class Day extends Component {
         this.state = {
             Day: 1,
             id: props.id,
-            night: this.props.night[this.props.night.length - 1]
+            night: this.props.night[this.props.night.length - 1],
         };
     }
 
@@ -23,11 +23,30 @@ class Day extends Component {
         if (!('Bodyguard' in night) || (night['Bodyguard'] != night['Werewolf'])) {
             this.props.setDead(night['Werewolf']);
         }
-        console.log("PLAYERS AFTER NIGHT: ", this.props.players);
+
+        const vote = {
+            day: this.state.Day
+        };
+        this.props.players.map(player => {
+            if (player.isDead == false) {
+                vote[player.id] = '';
+            }
+        });
+        this.props.addDay(vote);
     }
 
     shouldComponentUpdate() {
         return false;
+    }
+
+    //gets callback from playerselection and increments vote
+    myCallback = (dataFromChild) => {
+        const day_state = {
+            id: this.state.id,
+            value: dataFromChild
+        }
+        this.props.updateDay(day_state);
+        console.log("DAY: ", this.props.day);
     }
 
     render() {
@@ -35,7 +54,7 @@ class Day extends Component {
             <View style={styles.container}>
                 <View style={styles.Day}>
                     <Text style={styles.Title}>Day{this.state.Day}</Text>
-                    <PlayerSelection players={this.props.players} role={null}/>
+                    <PlayerSelection callbackFromParent={this.myCallback} players={this.props.players} day={ true }/>
                 </View>
             </View>
         );
@@ -77,6 +96,7 @@ const mapStateToProps = state => {
         players: state.players,
         night: state.night,
         id: state.id,
+        day: state.day,
     };
 };
 

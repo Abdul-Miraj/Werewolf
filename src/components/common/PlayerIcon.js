@@ -58,6 +58,7 @@ class PlayerIcon extends Component {
 
     // function that allows selection by player
     allowSelect = () => {
+        console.log("PI AS");
         this.setState({ isSelected: true });
         { this.props.callbackFromParent === undefined ? null : this.props.callbackFromParent(this.storeChoice())}
     };
@@ -69,6 +70,9 @@ class PlayerIcon extends Component {
                 // role is null in the lobby screen
                 if (this.props.myRole != null) {
                     { this.props.night[this.state.myRole] == null ? this.allowSelect() : null }
+                }
+                else if (this.props.day) {
+                    this.allowSelect();
                 }
             }}>
                 <View style={this.state.isSelected ? styles.selectedContainer : styles.container}>
