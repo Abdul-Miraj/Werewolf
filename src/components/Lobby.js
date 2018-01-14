@@ -10,7 +10,6 @@ import PlayerSelection from './PlayerSelection';
 import ButtonSet from './common/ButtonSet';
 import * as actions from '../actions';
 import io from 'socket.io-client';
-import _ from 'lodash';
 import shuffle from 'shuffle-array';
 import roles from '../reducers/RoleList.json';
 

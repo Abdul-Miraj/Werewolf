@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, ScrollView } from 'react-native';
 import * as actions from '../actions';
+import _ from 'lodash';
 import CountdownCircle from 'react-native-countdown-circle';
 import PlayerSelection from './PlayerSelection';
 import ButtonSet from './common/ButtonSet';
@@ -40,6 +41,7 @@ class Day extends Component {
             }
         });
         this.props.addDay(vote);
+        this.isGameOver();
     }
 
     shouldComponentUpdate() {
@@ -75,7 +77,25 @@ class Day extends Component {
 
     // check if game is over
     isGameOver = () => {
-
+        // create array of roles based on players alive
+        const playersAlive = _.filter(this.props.players, function (o) { return !o.isDead; });
+        const roleArray = _.map(playersAlive, 'role');
+        // array of wolves alive
+        const werewolves = _.remove(roleArray, function (n) {
+            return n == 'Werewolf';
+        });
+        // number of villagers
+        const villagers = playersAlive.length - werewolves.length;
+        // check to see if all wolves are dead
+        if (werewolves.length == 0) {
+            console.log("Villagers Win!");
+            return true;
+        // if more wolves than villagers WW win
+        } else if (villagers <= werewolves.length) {
+            console.log("Werewolves Win!");
+            return true;
+        }
+        return false;
     }
 
     // if you are dead dont display vote
