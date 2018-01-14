@@ -181,7 +181,6 @@ const mapStateToProps = state => {
         id: state.id,
         room: state.room,
         players: state.players,
-        room: state.room,
         socket: state.socket
     };
 };

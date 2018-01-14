@@ -14,16 +14,21 @@ class Day extends Component {
         this.state = {
             Day: 1,
             id: props.id,
-            night: this.props.night[this.props.night.length - 1],
+            players: props.players,
+            night: props.night[props.night.length - 1],
         };
     }
 
     componentWillMount() {
+        // mark the player as dead if killed at night
         let night = this.state.night;
+        // check to see if bodyguard protected who the wolves killed
         if (!('Bodyguard' in night) || (night['Bodyguard'] != night['Werewolf'])) {
             this.props.setDead(night['Werewolf']);
         }
+        // check to see if game is over
 
+        // create the vote object to keep track of who the players voted for
         const vote = {
             day: this.state.Day
         };
@@ -39,23 +44,52 @@ class Day extends Component {
         return false;
     }
 
-    //gets callback from playerselection and increments vote
+    //gets callback from playerselection and update vote
     myCallback = (dataFromChild) => {
         const day_state = {
             id: this.state.id,
             value: dataFromChild
         }
         this.props.updateDay(day_state);
-        console.log("DAY: ", this.props.day);
+    }
+
+    // check to see if you are dead
+    isDead = () => {
+        let playerIndex = this.state.players.findIndex(x => x.id == this.state.id);
+        if (this.props.players[playerIndex].isDead) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // check if game is over
+    isGameOver = () => {
+
+    }
+
+    // if you are dead dont display vote
+    renderDead = () => {
+        return (
+            <View style={styles.Day}>
+                <Text style={styles.Title}>Day {this.state.Day}</Text>
+            </View>
+        );
+    }
+
+    // display voting screen
+    renderDay = () => {
+        return (
+            <View style={styles.dead}>
+                <PlayerSelection callbackFromParent={this.myCallback} players={this.props.players} day={true} />
+            </View>
+        );
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.Day}>
-                    <Text style={styles.Title}>Day{this.state.Day}</Text>
-                    <PlayerSelection callbackFromParent={this.myCallback} players={this.props.players} day={ true }/>
-                </View>
+                {this.isDead() ? this.renderDead() : this.renderDay()}
             </View>
         );
     }
@@ -77,13 +111,12 @@ const styles = {
         justifyContent: 'center',
         alignItems: 'center',
     },
-    timer: {
+    dead: {
         flex: 1,
-        paddingTop: 40,
-        paddingRight: 25,
-        alignItems: 'flex-end',
-        justifyContent: 'flex-end'
-    }
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: 30
+    },
 };
 
 // Hide the navigation

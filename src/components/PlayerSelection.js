@@ -31,7 +31,6 @@ class PlayerSelection extends Component {
 
     // pass the data back to WakePlayer
     myCallback = (dataFromChild) => {
-        console.log("PS DFC: ", dataFromChild);
         // pass data back if there are any
         if (dataFromChild) {
             this.props.callbackFromParent(dataFromChild);

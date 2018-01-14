@@ -73,7 +73,7 @@ class WakePlayer extends Component {
                     </ScrollView>
                     <View style={selection}>
                         <Text style={highlight} >
-                            You have selected {this.props.night == null ? '' : this.props.night}
+                            You have selected {this.state.selectionData == "" ? this.state.selectionData + "" : this.props.night}
                         </Text>
                     </View>
                 </View>

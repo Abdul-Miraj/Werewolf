@@ -58,7 +58,6 @@ class PlayerIcon extends Component {
 
     // function that allows selection by player
     allowSelect = () => {
-        console.log("PI AS");
         this.setState({ isSelected: true });
         { this.props.callbackFromParent === undefined ? null : this.props.callbackFromParent(this.storeChoice())}
     };
