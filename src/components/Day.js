@@ -65,6 +65,11 @@ class Day extends Component {
         console.log("DAY: ", this.props.day);
     }
 
+    voteNight = () => {
+        // once everyone has voted go to night
+        this.props.navigation.dispatch({ type: 'Night' });
+    }
+
     // check to see if you are dead
     isDead = () => {
         let playerIndex = this.state.players.findIndex(x => x.id == this.state.id);
@@ -124,7 +129,7 @@ class Day extends Component {
                 <ButtonSet
                     isDisabled={this.isDead()}
                     btnTextOne="Start Night"
-                    btnPressOne={() => console.log("Go to next night")}
+                    btnPressOne={() => this.voteNight()}
                     btnTextTwo="Leave Game"
                     btnPressTwo={() => this.props.navigation.dispatch({ type: 'Back' })}
                 />
