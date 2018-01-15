@@ -65,6 +65,29 @@ class Day extends Component {
         console.log("DAY: ", this.props.day);
     }
 
+    majorityVote = () => {
+        let length = this.props.vote.length;
+        let max = 0;
+        let maxId = '';
+
+        for (id in this.props.vote){
+            let count = 0;
+            for (id2 in this.props.vote) {
+                if(this.props.vote[id] == this.props.vote[id2]){
+                    count++;
+                }
+            }
+            if (count > max) {
+                max = count;
+                maxId = id;
+            }
+        }
+        if (max > (length/2)){
+            console.log("MAX: ", max);
+            console.log("MAX ID: ", maxId);
+        }
+    }
+
     voteNight = () => {
         // once everyone has voted go to night
         this.props.navigation.dispatch({ type: 'Night' });
